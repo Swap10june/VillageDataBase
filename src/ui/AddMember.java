@@ -181,6 +181,11 @@ public class AddMember extends JDialog {
 		
 		comboHeadStatus = new JComboBox<String>(new String[]{"Yes","No"});
 		comboHeadStatus.setBounds(460,40, 100, 25);
+		comboHeadStatus.setEnabled(true);
+		if(buttonString.equalsIgnoreCase("Add Member"))
+		{
+			comboHeadStatus.setEnabled(false);
+		}
 		owner.add(comboHeadStatus);
 		
 		JLabel lblSex = new JLabel("Sex");

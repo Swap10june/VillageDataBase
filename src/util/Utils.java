@@ -163,7 +163,10 @@ public class Utils
 				pStmtMember.setInt(2,Integer.parseInt(FamilyID));
 				pStmtMember.setString(3, member.getM_name_e());
 				pStmtMember.setString(4, member.getM_name_m());
-				pStmtMember.setString(5, member.getFamily_head_status());
+				if(member.getFamily_head_status()!=null)
+					pStmtMember.setString(5, member.getFamily_head_status());
+				else
+					pStmtMember.setString(5, "No");
 				pStmtMember.setString(6, member.getM_sex());
 				pStmtMember.setString(7, member.getM_state());
 				pStmtMember.setString(8, member.getM_dist());

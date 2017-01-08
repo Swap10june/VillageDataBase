@@ -4,9 +4,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +30,8 @@ public class AddFamily extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public Map<String,JComponent> componenetMap = new HashMap<String,JComponent>();
+	
 	public static JTextField txtAssignFamilyID = new JTextField();
 	public JLabel lblAssignedFamilyID;
 	public static JButton btnAddFamilyHead;
@@ -38,15 +44,15 @@ public class AddFamily extends JDialog {
 	
 	private JTextField txtNameE = new JTextField(250);
 	private JTextField txtNameM = new JTextField(250);
-	private JLabel lblHeadStatus = new JLabel("Yes");
-	private JLabel lblSexStatus = new JLabel("M");
-	private JLabel lblStateStatus = new JLabel("Maharshtra");
-	private JLabel lblDistStatus = new JLabel("Ahmednagar");
-	private JLabel lblTalStatus = new JLabel("Parner");
-	private JLabel lblVillageStatus = new JLabel("Babhulwade");
-	private JLabel lblDobStatus = new JLabel("10/06/1991");
-	private JLabel lblContStatus = new JLabel("9665929145");
-	private JLabel lblWardStatus = new JLabel("1");
+	private JLabel lblHeadStatus = new JLabel(/*"Yes"*/);
+	private JLabel lblSexStatus = new JLabel(/*"M"*/);
+	private JLabel lblStateStatus = new JLabel(/*"Maharshtra"*/);
+	private JLabel lblDistStatus = new JLabel(/*"Ahmednagar"*/);
+	private JLabel lblTalStatus = new JLabel(/*"Parner"*/);
+	private JLabel lblVillageStatus = new JLabel(/*"Babhulwade"*/);
+	private JLabel lblDobStatus = new JLabel(/*"10/06/1991"*/);
+	private JLabel lblContStatus = new JLabel(/*"9665929145"*/);
+	private JLabel lblWardStatus = new JLabel(/*"1"*/);
 	
 	public static SFamily family = new SFamily();
 	
@@ -182,6 +188,7 @@ public class AddFamily extends JDialog {
 
 	private void initUI(JDialog owner)
 	{
+		
 		JPanel upperBody = new JPanel();
 		upperBody.setBounds(0, 110, 894, 1);
 		upperBody.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -189,6 +196,7 @@ public class AddFamily extends JDialog {
 		
 		JLabel lblAssignFamilyID = new JLabel("Assign Family ID",SwingConstants.CENTER);
 		lblAssignFamilyID.setBounds(10, 50, 120, 30);
+		setComponenet(lblAssignFamilyID);
 		owner.add(lblAssignFamilyID);
 		
 		
@@ -245,7 +253,7 @@ public class AddFamily extends JDialog {
 		infoPanel.setEnabled(false);
 		//infoPanel.setBackground(Color.cyan);
 		infoPanel.setLayout(null);
-		initPanelUI(infoPanel);
+		initInformationPanel(infoPanel);
 		JPanel middleBody = new JPanel();
 		middleBody.setBounds(0, 505, 894, 1);
 		middleBody.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -262,135 +270,170 @@ public class AddFamily extends JDialog {
 		
 	}
 
-	private void initPanelUI(JPanel infoPanel) 
+	private void setComponenet(JComponent component) {
+		component.setName(component.toString());
+		componenetMap.put(component.getName(), component);
+		
+	}
+
+	private void initInformationPanel(JPanel infoPanel) 
 	{
 		JLabel lblNameE = new JLabel("Name(Eng.)");
 		lblNameE.setBounds(5,10, 100, 25);
 		lblNameE.setFont(new Font("Andalus", Font.BOLD,15));
+		setComponenet(lblNameE);
 		infoPanel.add(lblNameE);
 		
 		
 		txtNameE.setBounds(110, 10, 200, 25);
+		setComponenet(txtNameE);
 		infoPanel.add(txtNameE);
 		
 		JLabel lblNameM = new JLabel("Name(Mar.)");
 		lblNameM.setFont(new Font("Andalus", Font.BOLD,15));
 		lblNameM.setBounds(5,45, 100, 25);
+		setComponenet(lblNameM);
 		infoPanel.add(lblNameM);
 		
 		
 		txtNameM.setBounds(110, 45, 200, 25);
 		txtNameM.setFont(new Font("Shivaji05", Font.BOLD,15));
+		setComponenet(txtNameM);
 		infoPanel.add(txtNameM);
 		
 		JLabel lblHead = new JLabel("Family Head");
 		lblHead.setFont(new Font("Andalus", Font.BOLD,15));
 		lblHead.setBounds(350,10, 100, 25);
+		setComponenet(lblHead);
 		infoPanel.add(lblHead);
 		
 		
 		lblHeadStatus.setBounds(460,10, 100, 25);
+		setComponenet(lblHeadStatus);
 		infoPanel.add(lblHeadStatus);
 		
 		JLabel lblSex = new JLabel("Sex");
 		lblSex.setFont(new Font("Andalus", Font.BOLD,15));
 		lblSex.setBounds(350,45, 100, 25);
+		setComponenet(lblSex);
 		infoPanel.add(lblSex);
 		
 		
 		lblSexStatus.setBounds(460,45, 100, 25);
+		setComponenet(lblSexStatus);
 		infoPanel.add(lblSexStatus);
 		
 		JLabel lblAddress = new JLabel("Enter Address Info");
 		lblAddress.setFont(new Font("Andalus", Font.ITALIC,15));
 		lblAddress.setBounds(5,90, 150, 25);
+		setComponenet(lblAddress);
 		infoPanel.add(lblAddress);
 		
 		JLabel lblState = new JLabel("State");
 		lblState.setFont(new Font("Andalus", Font.BOLD,15));
 		lblState.setBounds(110,120, 60, 25);
+		setComponenet(lblState);
 		infoPanel.add(lblState);
 		
 		
 		lblStateStatus.setBounds(170,120, 100, 25);
+		setComponenet(lblStateStatus);
 		infoPanel.add(lblStateStatus);
 		
 		JLabel lblDist = new JLabel("Dist.");
 		lblDist.setFont(new Font("Andalus", Font.BOLD,15));
 		lblDist.setBounds(280,120, 60, 25);
+		setComponenet(lblDist);
 		infoPanel.add(lblDist);
 		
 		
 		lblDistStatus.setBounds(350,120, 100, 25);
+		setComponenet(lblDistStatus);
 		infoPanel.add(lblDistStatus);
 		
 		JLabel lblTal = new JLabel("Tal.");
 		lblTal.setFont(new Font("Andalus", Font.BOLD,15));
 		lblTal.setBounds(110,160, 60, 25);
+		setComponenet(lblTal);
 		infoPanel.add(lblTal);
 		
 		
 		lblTalStatus.setBounds(170,160, 150, 25);
+		setComponenet(lblTalStatus);
 		infoPanel.add(lblTalStatus);
 		
 		JLabel lblVillage = new JLabel("Gaon");
 		lblVillage.setFont(new Font("Andalus", Font.BOLD,15));
 		lblVillage.setBounds(280,160, 60, 25);
+		setComponenet(lblVillage);
 		infoPanel.add(lblVillage);
 		
 		
 		lblVillageStatus.setBounds(350,160, 150, 25);
+		setComponenet(lblVillageStatus);
 		infoPanel.add(lblVillageStatus);
 		
 		
 		JLabel lblPersonalInfo = new JLabel("Enter Personal Info");
 		lblPersonalInfo.setFont(new Font("Andalus", Font.ITALIC,15));
 		lblPersonalInfo.setBounds(5,190, 150, 25);
+		setComponenet(lblPersonalInfo);
 		infoPanel.add(lblPersonalInfo);
 		
 		JLabel lblDob = new JLabel("DOB");
 		lblDob.setFont(new Font("Andalus", Font.BOLD,15));
 		lblDob.setBounds(110,220, 60, 25);
+		setComponenet(lblDob);
 		infoPanel.add(lblDob);
 		
 		
 		lblDobStatus.setBounds(170,220, 150, 25);
+		setComponenet(lblDobStatus);
 		infoPanel.add(lblDobStatus);
 		
 		JLabel lblCont = new JLabel("Mob No.");
 		lblCont.setFont(new Font("Andalus", Font.BOLD,15));
 		lblCont.setBounds(280,220, 60, 25);
+		setComponenet(lblCont);
 		infoPanel.add(lblCont);
 		
 		
 		lblContStatus.setBounds(350,220, 150, 25);
+		setComponenet(lblContStatus);
 		infoPanel.add(lblContStatus);
 		
 		JLabel lblWard = new JLabel("Ward No.");
 		lblWard.setFont(new Font("Andalus", Font.BOLD,15));
 		lblWard.setBounds(450,220, 100, 25);
+		setComponenet(lblWard);
 		infoPanel.add(lblWard);
 		
 		
 		lblWardStatus.setBounds(540,220, 50, 25);
+		setComponenet(lblWardStatus);
 		infoPanel.add(lblWardStatus);
 		
 		
 		JLabel lblAssignMemberID = new JLabel("Member ID",SwingConstants.CENTER);
 		lblAssignMemberID.setBounds(5, 310, 150, 30);
+		setComponenet(lblAssignMemberID);
 		infoPanel.add(lblAssignMemberID);
 		
 		
 		
 		txtAssignMemberID.setEditable(false);
 		txtAssignMemberID.setBounds(160, 310, 200, 30);
+		setComponenet(txtAssignMemberID);
 		infoPanel.add(txtAssignMemberID);
 		
 		/*JButton btnAssignMemberID = new JButton("Assign");
 		btnAssignMemberID.setBounds(380, 310, 120, 30);
 		infoPanel.add(btnAssignMemberID);
 		//btnAssignMemberID.addActionListener(new AssignButtonHandler(this,infoPanel));*/
-		
+		for (Entry<String, JComponent> entry : componenetMap.entrySet())
+		{
+			entry.getValue().setVisible(false);
+		}
 		
 	}
 

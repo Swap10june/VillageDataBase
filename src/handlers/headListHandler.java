@@ -1,8 +1,12 @@
 package handlers;
 
+import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.swing.JComponent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -31,6 +35,11 @@ public class headListHandler implements ItemListener
 	}
 	private void populateMemberInfo(SMember member)
 	{
+		
+		for (Entry<String, JComponent> entry : addFamily.componenetMap.entrySet())
+		{
+			entry.getValue().setVisible(true);
+		}
 		addFamily.getTxtAssignMemberID().setText(member.getMember_id());
 		addFamily.getTxtNameE().setText(member.getM_name_e());
 		addFamily.getTxtNameM().setText(member.getM_name_m());

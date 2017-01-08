@@ -45,7 +45,7 @@ public class SubmitMemberButtonHandler implements ActionListener {
 				member.setMember_id(addMember.txtAssignMemberID.getText());
 				member.setM_name_e(addMember.getTxtNameE().getText());
 				member.setM_name_m(addMember.getTxtNameM().getText());
-				member.setFamily_head_status(addMember.getComboHeadStatus().getSelectedItem().toString());
+				member.setFamily_head_status("Yes");
 				member.setM_sex(addMember.getComboSexStatus().getSelectedItem().toString());
 				member.setM_state(addMember.getComboStateStatus().getSelectedItem().toString());
 				member.setM_dist(addMember.getComboDistStatus().getSelectedItem().toString());
@@ -69,7 +69,7 @@ public class SubmitMemberButtonHandler implements ActionListener {
 			member.setMember_id(addMember.txtAssignMemberID.getText());
 			member.setM_name_e(addMember.getTxtNameE().getText());
 			member.setM_name_m(addMember.getTxtNameM().getText());
-			member.setFamily_head_status(addMember.getComboHeadStatus().getSelectedItem().toString());
+			member.setFamily_head_status("No");
 			member.setM_sex(addMember.getComboSexStatus().getSelectedItem().toString());
 			member.setM_state(addMember.getComboStateStatus().getSelectedItem().toString());
 			member.setM_dist(addMember.getComboDistStatus().getSelectedItem().toString());
