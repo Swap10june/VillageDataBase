@@ -23,18 +23,19 @@ import beans.SMember;
 
 public class Utils 
 {
-	public static void applyBasicSettingsOnWindow(JDialog frame, String title) 
+	public static void applyBasicSettingsOnWindow(JDialog owner, String title) 
 	{
+		owner.setLayout(null);
 	    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-	    int x = (int) ((dimension.getWidth() - frame.getWidth()) / 4);
-	    int y = (int) ((dimension.getHeight() - frame.getHeight()) / 5);
-	    frame.setLocation(200,100);
-	    frame.setSize(new Dimension(900, 602));
-	    frame.setModal(true);
-	    frame.setResizable(false);
-	    frame.setTitle(title);
-	    frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	    frame.setLayout(null);
+	    int x = (int) ((dimension.getWidth() - owner.getWidth()) / 4);
+	    int y = (int) ((dimension.getHeight() - owner.getHeight()) / 5);
+	    owner.setLocation(200,100);
+	    owner.setSize(new Dimension(900, 602));
+	    owner.setModal(true);
+	    owner.setResizable(false);
+	    owner.setTitle(title);
+	    owner.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	    
 	    
 	    JLabel headerLabel = new JLabel("Village Management Syastem",SwingConstants.CENTER);
 	    headerLabel.setBounds(0, 0, 894, 30);
@@ -43,17 +44,18 @@ public class Utils
 	    headerLabel.setFont(font);
 	    Border border = BorderFactory.createLineBorder(Color.blue);
 	    headerLabel.setBorder(border);
-	    frame.add(headerLabel);
+	    owner.add(headerLabel);
 	    
 	    JLabel footerLabel = new JLabel("Unity Infotech Group (I) Pvt Ltd",SwingConstants.CENTER);
 	    footerLabel.setBounds(0, 542, 894, 30);
 	    footerLabel.setFont(font);
 	    footerLabel.setBorder(border);
-	    frame.add(footerLabel);
+	    owner.add(footerLabel);
 	}
 
 	public static void applyBasicSettingsOnWindow1(JDialog owner, String string)
 	{
+		owner.setLayout(null);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 	    int x = (int) ((dimension.getWidth() - owner.getWidth()) / 10);
 	    int y = (int) ((dimension.getHeight() - owner.getHeight()) / 10);
@@ -63,7 +65,7 @@ public class Utils
 	    owner.setResizable(false);
 	    owner.setTitle(string);
 	    owner.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	    owner.setLayout(null);
+	    
 	    
 	    JLabel headerLabel = new JLabel("Village Management Syastem",SwingConstants.CENTER);
 	    headerLabel.setBounds(0, 0, 594, 30);

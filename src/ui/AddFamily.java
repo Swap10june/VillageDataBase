@@ -196,7 +196,6 @@ public class AddFamily extends JDialog {
 		
 		JLabel lblAssignFamilyID = new JLabel("Assign Family ID",SwingConstants.CENTER);
 		lblAssignFamilyID.setBounds(10, 50, 120, 30);
-		setComponenet(lblAssignFamilyID);
 		owner.add(lblAssignFamilyID);
 		
 		
