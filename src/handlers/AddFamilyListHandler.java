@@ -1,24 +1,20 @@
 package handlers;
 
-import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.swing.JComponent;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import beans.SMember;
 import ui.AddFamily;
+import util.Props;
 
-public class headListHandler implements ItemListener
+public class AddFamilyListHandler implements ItemListener
 {
 
 	
 	private AddFamily addFamily;
-	public headListHandler(AddFamily addFamily)
+	public AddFamilyListHandler(AddFamily addFamily)
 	{
 		this.addFamily = addFamily;
 	}
@@ -27,11 +23,12 @@ public class headListHandler implements ItemListener
 	{
 		addFamily.btnAddMember.setEnabled(true);	
 		String selectedItem = ((java.awt.List) e.getSource()).getSelectedItem().toString();
-		String [] str = selectedItem.split(">");
+		String [] str = selectedItem.split(Props.STRING_SPLIT);
 		SMember member = addFamily.getFamily().getMember(str[0]);
 		
 		populateMemberInfo(member);
 		addFamily.btnSubmitFamily.setEnabled(true);
+		AddFamily.listOfHead.setEnabled(false);
 	}
 	private void populateMemberInfo(SMember member)
 	{

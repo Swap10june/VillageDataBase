@@ -8,10 +8,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -99,7 +103,7 @@ public class Utils
         }
         return "Error";
     }
-    private  static ResultSet querySELECT(String Query) throws ClassNotFoundException, SQLException
+    public  static ResultSet querySELECT(String Query) throws ClassNotFoundException, SQLException
     {
 	  
         System.out.println("Select query fired: "+Query);
@@ -215,5 +219,49 @@ public class Utils
 			}
 	        
 	        
+	}
+
+	public static ArrayList<String> queryMultiColumnSelect(String table, Map<String,String> columnNames)
+	{
+		ArrayList<String> list = new ArrayList<>();
+		String columName = "";
+		for (Map.Entry<String, String> entry :columnNames.entrySet())
+		{
+			list.add(entry.getValue());
+		}
+		for (int i = 0; i < list.size(); i++)
+		{
+			columName+=list.get(i);
+			if(i!=list.size()-1)
+			{
+				columName+=" , ";
+			}
+		}
+		try
+		{
+			
+			ResultSet set = Utils.querySELECT("SELECT "+columName+" FROM "+table);
+			String prefix = "FID-";
+			list.clear();
+			while(set.next())
+			{
+				list.add(set.getString(2)+":"+prefix+":"+String.valueOf(set.getInt(1)));
+			}
+			return list;
+		} catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;		
+	}
+	public static void setComponenet(JComponent component, Map<String,JComponent> componenetMap)
+	{
+		component.setName(component.toString());
+		componenetMap.put(component.getName(), component);
 	}
 }

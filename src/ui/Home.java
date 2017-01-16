@@ -3,7 +3,7 @@ package ui;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import handlers.AddFamilyButtonHandler;
+import handlers.HomeButtonHandler;
 import util.Props;
 import util.Utils;
 
@@ -33,7 +33,7 @@ public class Home extends JDialog {
 				
 				btnArray[i].setBounds(xPos,yPos, 150, 25);
 				owner.add(btnArray[i]);
-				btnArray[i].addActionListener(new AddFamilyButtonHandler(owner));
+				btnArray[i].addActionListener(new HomeButtonHandler(owner));
 			}
 			else
 			{

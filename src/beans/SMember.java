@@ -1,5 +1,7 @@
 package beans;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -164,6 +166,39 @@ public class SMember
 	public void addMultipleDocuments(Document[] documents)
 	{
 		this.documents.addAll(Arrays.asList(documents));
+	}
+	public static SMember createMemberFromDBInstance(ResultSet set)
+	{
+		SMember member = new SMember();
+		try
+		{
+			while(set.next())
+			{
+				member.setMember_id(String.valueOf(set.getInt("member_id")));
+				
+				member.setFamily_id(String.valueOf(set.getInt("family_id")));
+				member.setM_name_e(set.getString("m_name_e"));
+				member.setM_name_m(set.getString("m_name_m"));
+				member.setFamily_head_status(set.getString("family_head_status"));
+				
+				member.setM_sex(set.getString("m_sex"));
+				member.setM_state(set.getString("m_state"));
+				member.setM_dist(set.getString("m_dist"));
+				member.setM_tal(set.getString("m_tal"));
+				member.setM_gaon(set.getString("m_gaon"));
+				
+				member.setM_dob(set.getString("m_dob"));
+				member.setM_ward(set.getInt("m_ward"));
+				member.setM_contact(set.getString("m_contact"));
+			}
+			return member;
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 }
 

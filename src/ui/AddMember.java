@@ -293,10 +293,16 @@ public class AddMember extends JDialog {
 		btnAssignMemberID.addActionListener(new AssignIDButtonHandler(this, owner));
 		
 		btnSubmitMember = new JButton(buttonString);
-		btnSubmitMember.setBounds(220, 380, 150, 30);
+		btnSubmitMember.setBounds(10, 400, 150, 30);
 		//btnSubmitMember.setEnabled(false);
 		owner.add(btnSubmitMember);
 		btnSubmitMember.addActionListener(new SubmitMemberButtonHandler(this,owner));
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setBounds(300, 400, 150, 30);
+		//btnSubmitMember.setEnabled(false);
+		owner.add(btnCancel);
+		btnCancel.addActionListener(new SubmitMemberButtonHandler(this,owner));
 	}
 
 }

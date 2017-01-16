@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import beans.SMember;
 import ui.AddFamily;
 import ui.AddMember;
+import util.Props;
 
 public class SubmitMemberButtonHandler implements ActionListener {
 
@@ -53,7 +54,7 @@ public class SubmitMemberButtonHandler implements ActionListener {
 				member.setM_ward(Integer.parseInt(addMember.getTxtWardStatus().getText()));
 				member.setM_contact(addMember.getTxtContStatus().getText());
 				addMember.setMember(member);
-				AddFamily.listOfHead.add(member.getMember_id()+">"+member.getM_name_e());
+				AddFamily.listOfHead.add(member.getMember_id()+Props.STRING_SPLIT+member.getM_name_e());
 				AddFamily.btnAddFamilyHead.setEnabled(false);
 				owner.dispose();
 			}
@@ -77,7 +78,11 @@ public class SubmitMemberButtonHandler implements ActionListener {
 			member.setM_ward(Integer.parseInt(addMember.getTxtWardStatus().getText()));
 			member.setM_contact(addMember.getTxtContStatus().getText());
 			addMember.setMember(member);
-			AddFamily.listOfMembers.add(member.getMember_id()+">"+member.getM_name_e());
+			AddFamily.listOfMembers.add(member.getMember_id()+Props.STRING_SPLIT+member.getM_name_e());
+			owner.dispose();
+		}
+		if(e.getActionCommand().equalsIgnoreCase("Cancel"))
+		{
 			owner.dispose();
 		}
 	}

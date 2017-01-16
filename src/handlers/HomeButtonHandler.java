@@ -6,11 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 
 import ui.AddFamily;
+import ui.EditFamily;
 
-public class AddFamilyButtonHandler implements ActionListener
+public class HomeButtonHandler implements ActionListener
 {
 	JDialog parent;
-	public AddFamilyButtonHandler(JDialog parent)
+	public HomeButtonHandler(JDialog parent)
 	{
 		this.parent = parent;
 	}
@@ -23,6 +24,18 @@ public class AddFamilyButtonHandler implements ActionListener
 			case "Add Family":
 			{
 				AddFamily addFamily = new AddFamily(new javax.swing.JDialog());
+			}
+			
+			break;
+			case "Show Family":
+			{
+				
+			}
+			
+			break;
+			case "Edit Family":
+			{
+				EditFamily addMemberIntoFamily = new EditFamily(new javax.swing.JDialog());
 			}
 			
 			break;

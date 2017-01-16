@@ -1,9 +1,13 @@
 package ui;
 
+import handlers.EditFamilyButtonHandler;
+import handlers.EditFamilyListHandler;
+import handlers.AddFamilyListHandler;
+
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,176 +21,31 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import beans.SFamily;
-import handlers.AddHeadButtonHandler;
-import handlers.AssignIDButtonHandler;
-import handlers.SubmitFamilyButtonHandler;
-import handlers.AddFamilyListHandler;
+import util.AutoSuggestor;
+import util.DBConnection;
 import util.Utils;
 
-public class AddFamily extends JDialog {
+public class EditFamily extends JDialog
+{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	//public JTextField txtSelectFamilyID = new JTextField();
+	public JTextField txtSelectFamilyID = new JTextField(500);
+	public List listOfHead = new List(1,true);
+	public JLabel lblAssignedFamilyID = new JLabel("",SwingConstants.CENTER);
 	public Map<String,JComponent> componenetMap = new HashMap<String,JComponent>();
+
 	
-	public static JTextField txtAssignFamilyID = new JTextField();
-	public JLabel lblAssignedFamilyID;
-	public static JButton btnAddFamilyHead;
-	public static JButton btnSubmitFamily;
-	public JButton btnAddMember;
-	public static List listOfHead;
-	public static List listOfMembers;
-	
-	public JTextField txtAssignMemberID = new JTextField(250);
-	
-	private JTextField txtNameE = new JTextField(250);
-	private JTextField txtNameM = new JTextField(250);
-	private JLabel lblHeadStatus = new JLabel(/*"Yes"*/);
-	private JLabel lblSexStatus = new JLabel(/*"M"*/);
-	private JLabel lblStateStatus = new JLabel(/*"Maharshtra"*/);
-	private JLabel lblDistStatus = new JLabel(/*"Ahmednagar"*/);
-	private JLabel lblTalStatus = new JLabel(/*"Parner"*/);
-	private JLabel lblVillageStatus = new JLabel(/*"Babhulwade"*/);
-	private JLabel lblDobStatus = new JLabel(/*"10/06/1991"*/);
-	private JLabel lblContStatus = new JLabel(/*"9665929145"*/);
-	private JLabel lblWardStatus = new JLabel(/*"1"*/);
-	
-	public static SFamily family = new SFamily();
-	
-	
-	public AddFamily(JDialog owner)
+	public EditFamily(JDialog owner)
 	{
 		super(owner);
-		Utils.applyBasicSettingsOnWindow(owner,"Add Family");
+		Utils.applyBasicSettingsOnWindow(owner,"Edit Family");
 		initUI(owner);
 		owner.setVisible(true);
 	}
-	public static List getListOfHead() {
-		return listOfHead;
-	}
-
-	public static void setListOfHead(List listOfHead) {
-		AddFamily.listOfHead = listOfHead;
-	}
-
-	public static List getListOfMembers() {
-		return listOfMembers;
-	}
-
-	public static void setListOfMembers(List listOfMembers) {
-		AddFamily.listOfMembers = listOfMembers;
-	}
-
-	public JTextField getTxtAssignMemberID() {
-		return txtAssignMemberID;
-	}
-
-	public void setTxtAssignMemberID(JTextField txtAssignMemberID) {
-		this.txtAssignMemberID = txtAssignMemberID;
-	}
-
-	public JTextField getTxtNameE() {
-		return txtNameE;
-	}
-
-	public void setTxtNameE(JTextField txtNameE) {
-		this.txtNameE = txtNameE;
-	}
-
-	public JTextField getTxtNameM() {
-		return txtNameM;
-	}
-
-	public void setTxtNameM(JTextField txtNameM) {
-		this.txtNameM = txtNameM;
-	}
-
-	public JLabel getLblHeadStatus() {
-		return lblHeadStatus;
-	}
-
-	public void setLblHeadStatus(JLabel lblHeadStatus) {
-		this.lblHeadStatus = lblHeadStatus;
-	}
-
-	public JLabel getLblSexStatus() {
-		return lblSexStatus;
-	}
-
-	public void setLblSexStatus(JLabel lblSexStatus) {
-		this.lblSexStatus = lblSexStatus;
-	}
-
-	public JLabel getLblStateStatus() {
-		return lblStateStatus;
-	}
-
-	public void setLblStateStatus(JLabel lblStateStatus) {
-		this.lblStateStatus = lblStateStatus;
-	}
-
-	public JLabel getLblDistStatus() {
-		return lblDistStatus;
-	}
-
-	public void setLblDistStatus(JLabel lblDistStatus) {
-		this.lblDistStatus = lblDistStatus;
-	}
-
-	public JLabel getLblTalStatus() {
-		return lblTalStatus;
-	}
-
-	public void setLblTalStatus(JLabel lblTalStatus) {
-		this.lblTalStatus = lblTalStatus;
-	}
-
-	public JLabel getLblVillageStatus() {
-		return lblVillageStatus;
-	}
-
-	public void setLblVillageStatus(JLabel lblVillageStatus) {
-		this.lblVillageStatus = lblVillageStatus;
-	}
-
-	public JLabel getLblDobStatus() {
-		return lblDobStatus;
-	}
-
-	public void setLblDobStatus(JLabel lblDobStatus) {
-		this.lblDobStatus = lblDobStatus;
-	}
-
-	public JLabel getLblContStatus() {
-		return lblContStatus;
-	}
-
-	public void setLblContStatus(JLabel lblContStatus) {
-		this.lblContStatus = lblContStatus;
-	}
-
-	public JLabel getLblWardStatus() {
-		return lblWardStatus;
-	}
-
-	public void setLblWardStatus(JLabel lblWardStatus) {
-		this.lblWardStatus = lblWardStatus;
-	}
-
-	
-
-	public SFamily getFamily() {
-		return family;
-	}
-
-	public void setFamily(SFamily family) {
-		this.family = family;
-	}
-
-	
 
 	private void initUI(JDialog owner)
 	{
@@ -194,60 +53,43 @@ public class AddFamily extends JDialog {
 		JPanel upperBody = new JPanel();
 		upperBody.setBounds(0, 110, 894, 1);
 		upperBody.setBorder(BorderFactory.createLineBorder(Color.black));
-		owner.add(upperBody);
+		owner.getContentPane().add(upperBody);
 		
-		JLabel lblAssignFamilyID = new JLabel("Assign Family ID",SwingConstants.CENTER);
-		lblAssignFamilyID.setBounds(10, 50, 120, 30);
-		owner.add(lblAssignFamilyID);
+		JLabel lblSelectFamilyID = new JLabel("Select Family ID",SwingConstants.CENTER);
+		lblSelectFamilyID.setBounds(10, 50, 120, 30);
+		owner.getContentPane().add(lblSelectFamilyID);
 		
 		
 		
-		txtAssignFamilyID.setEditable(false);
-		txtAssignFamilyID.setBounds(150, 50, 400, 30);
-		owner.add(txtAssignFamilyID);
+		txtSelectFamilyID.setBounds(150, 50, 400, 30);
+		owner.getContentPane().add(txtSelectFamilyID);
 		
-		JButton btnAssignFamilyID = new JButton("Assign ");
-		btnAssignFamilyID.setBounds(570, 50, 120, 30);
-		owner.add(btnAssignFamilyID);
-		btnAssignFamilyID.addActionListener(new AssignIDButtonHandler(this,owner));
 		
-		lblAssignedFamilyID = new JLabel("",SwingConstants.CENTER);
+		
+		JButton btnSelectFamilyID = new JButton("Select");
+		btnSelectFamilyID.setBounds(570, 50, 120, 30);
+		owner.getContentPane().add(btnSelectFamilyID);
+		btnSelectFamilyID.addActionListener(new EditFamilyButtonHandler(this));
+		
+		
 		lblAssignedFamilyID.setBounds(10, 115, 120, 30);
 		owner.add(lblAssignedFamilyID);
 		
-		btnAddFamilyHead = new JButton("Add Family Head");
-		btnAddFamilyHead.setBounds(150, 115, 150, 30);
-		btnAddFamilyHead.setEnabled(false);
-		owner.add(btnAddFamilyHead);
-		btnAddFamilyHead.addActionListener(new AddHeadButtonHandler(this,owner));
 		
-		
-		
-		
-		listOfHead = new List(1,true);
 		listOfHead.setBounds(10, 160, 300, 50);
-		//listOfHead.setMultipleMode(false);
-		 
-		listOfHead.setEnabled(false);
-		//listOfHead.addActionListener(new headListHandler(this));
-		listOfHead.addItemListener(new AddFamilyListHandler(this));
+		listOfHead.addItemListener(new EditFamilyListHandler(this));
 		/*for (int i = 0; i < 10; i++) {
 			listOfHead.add("swap:"+i);
 		}*/
 		owner.add(listOfHead);
 		
-		listOfMembers = new List();
+		List listOfMembers = new List();
 		listOfMembers.setBounds(10, 250, 300, 250);
 		listOfMembers.setMultipleMode(false);
 		listOfMembers.setEnabled(false);
-		listOfMembers.addItemListener(new AddFamilyListHandler(this));
+		//listOfMembers.addItemListener(new headListHandler(this));
 		owner.add(listOfMembers);
 		
-		btnAddMember = new JButton("Add Member");
-		btnAddMember.setBounds(10, 215, 150, 30);
-		btnAddMember.setEnabled(false);
-		owner.add(btnAddMember);
-		btnAddMember.addActionListener(new AddHeadButtonHandler(this,owner));
 		
 		JPanel infoPanel = new JPanel();
 		infoPanel.setBounds(315, 160, 560, 340);
@@ -255,24 +97,29 @@ public class AddFamily extends JDialog {
 		//infoPanel.setBackground(Color.cyan);
 		infoPanel.setLayout(null);
 		initInformationPanel(infoPanel);
+		owner.add(infoPanel);
 		JPanel middleBody = new JPanel();
 		middleBody.setBounds(0, 505, 894, 1);
 		middleBody.setBorder(BorderFactory.createLineBorder(Color.black));
 		owner.add(middleBody);
-		
-		btnSubmitFamily = new JButton("Submit Family");
-		btnSubmitFamily.setBounds(400, 510, 150, 30);
-		btnSubmitFamily.setEnabled(false);
-		owner.add(btnSubmitFamily);
-		btnSubmitFamily.addActionListener(new SubmitFamilyButtonHandler(this,owner));
-		
-		owner.add(infoPanel);
-		
-		
+		AutoSuggestor autoSuggestor = new AutoSuggestor(txtSelectFamilyID, owner, null, Color.WHITE.brighter(), Color.BLUE, Color.RED, 0.75f)
+		{
+		    protected boolean wordTyped(String typedWord) {
+
+		        //create list for dictionary this in your case might be done via calling a method which queries db and returns results as arraylist
+		        ArrayList<String> words = new ArrayList<>();
+
+		        Map<String, String> columnNames = new HashMap<String,String>();
+		        columnNames.put("family_id", "family_id");
+		        columnNames.put("family_head", "family_head");
+		        words = Utils.queryMultiColumnSelect("SFamily",columnNames);
+		        setDictionary(words);
+		        //addToDictionary("bye");//adds a single word
+
+		        return super.wordTyped(typedWord);//now call super to check for any matches against newest dictionary
+		    }
+		};
 	}
-
-	
-
 	private void initInformationPanel(JPanel infoPanel) 
 	{
 		JLabel lblNameE = new JLabel("Name(Eng.)");
@@ -282,8 +129,9 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblNameE);
 		
 		
+		JTextField txtNameE = new JTextField();
 		txtNameE.setBounds(110, 10, 200, 25);
-		Utils.setComponenet(lblNameE,componenetMap);
+		Utils.setComponenet(txtNameE,componenetMap);
 		infoPanel.add(txtNameE);
 		
 		JLabel lblNameM = new JLabel("Name(Mar.)");
@@ -293,6 +141,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblNameM);
 		
 		
+		JTextField txtNameM = new JTextField();
 		txtNameM.setBounds(110, 45, 200, 25);
 		txtNameM.setFont(new Font("Shivaji05", Font.BOLD,15));
 		Utils.setComponenet(txtNameM,componenetMap);
@@ -305,6 +154,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblHead);
 		
 		
+		JLabel lblHeadStatus = new JLabel();
 		lblHeadStatus.setBounds(460,10, 100, 25);
 		Utils.setComponenet(lblHeadStatus,componenetMap);
 		infoPanel.add(lblHeadStatus);
@@ -316,6 +166,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblSex);
 		
 		
+		JLabel lblSexStatus = new JLabel();
 		lblSexStatus.setBounds(460,45, 100, 25);
 		Utils.setComponenet(lblSexStatus,componenetMap);
 		infoPanel.add(lblSexStatus);
@@ -333,6 +184,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblState);
 		
 		
+		JLabel lblStateStatus = new JLabel();
 		lblStateStatus.setBounds(170,120, 100, 25);
 		Utils.setComponenet(lblStateStatus,componenetMap);
 		infoPanel.add(lblStateStatus);
@@ -344,6 +196,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblDist);
 		
 		
+		JLabel lblDistStatus =new JLabel();
 		lblDistStatus.setBounds(350,120, 100, 25);
 		Utils.setComponenet(lblDistStatus,componenetMap);
 		infoPanel.add(lblDistStatus);
@@ -355,6 +208,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblTal);
 		
 		
+		JLabel lblTalStatus = new JLabel();
 		lblTalStatus.setBounds(170,160, 150, 25);
 		Utils.setComponenet(lblTalStatus,componenetMap);
 		infoPanel.add(lblTalStatus);
@@ -366,6 +220,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblVillage);
 		
 		
+		JLabel lblVillageStatus = new JLabel();
 		lblVillageStatus.setBounds(350,160, 150, 25);
 		Utils.setComponenet(lblVillageStatus,componenetMap);
 		infoPanel.add(lblVillageStatus);
@@ -384,6 +239,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblDob);
 		
 		
+		JLabel lblDobStatus = new JLabel();
 		lblDobStatus.setBounds(170,220, 150, 25);
 		Utils.setComponenet(lblDobStatus,componenetMap);
 		infoPanel.add(lblDobStatus);
@@ -395,6 +251,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblCont);
 		
 		
+		JLabel lblContStatus = new JLabel();
 		lblContStatus.setBounds(350,220, 150, 25);
 		Utils.setComponenet(lblContStatus,componenetMap);
 		infoPanel.add(lblContStatus);
@@ -406,6 +263,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblWard);
 		
 		
+		JLabel lblWardStatus = new JLabel();
 		lblWardStatus.setBounds(540,220, 50, 25);
 		Utils.setComponenet(lblWardStatus,componenetMap);
 		infoPanel.add(lblWardStatus);
@@ -418,21 +276,16 @@ public class AddFamily extends JDialog {
 		
 		
 		
+		JTextField txtAssignMemberID = new JTextField();
 		txtAssignMemberID.setEditable(false);
 		txtAssignMemberID.setBounds(160, 310, 200, 30);
 		Utils.setComponenet(txtAssignMemberID,componenetMap);
 		infoPanel.add(txtAssignMemberID);
 		
-		/*JButton btnAssignMemberID = new JButton("Assign");
-		btnAssignMemberID.setBounds(380, 310, 120, 30);
-		infoPanel.add(btnAssignMemberID);
-		//btnAssignMemberID.addActionListener(new AssignButtonHandler(this,infoPanel));*/
 		for (Entry<String, JComponent> entry : componenetMap.entrySet())
 		{
 			entry.getValue().setVisible(false);
 		}
-		
 	}
 
-	
 }
