@@ -35,9 +35,118 @@ public class EditFamily extends JDialog
 	//public JTextField txtSelectFamilyID = new JTextField();
 	public JTextField txtSelectFamilyID = new JTextField(500);
 	public List listOfHead = new List(1,true);
-	public JLabel lblAssignedFamilyID = new JLabel("",SwingConstants.CENTER);
+	public List listOfMembers = new List();
 	public Map<String,JComponent> componenetMap = new HashMap<String,JComponent>();
+	private JTextField txtNameM ;
+	private JLabel lblHeadStatus ;
+	private JLabel lblSexStatus ;
+	private JLabel lblStateStatus ;
+	private JLabel lblDistStatus ;
+	private JLabel lblTalStatus ;
+	private JLabel lblVillageStatus ;
+	private JLabel lblDobStatus ;
+	private JLabel lblContStatus ;
+	private JLabel lblWardStatus ;
+	private JTextField txtAssignMemberID = new JTextField();
+	private JTextField txtNameE ;
+	
+	
+	public JTextField getTxtNameE() {
+		return txtNameE;
+	}
 
+	public void setTxtNameE(JTextField txtNameE) {
+		this.txtNameE = txtNameE;
+	}
+
+	public JTextField getTxtNameM() {
+		return txtNameM;
+	}
+
+	public void setTxtNameM(JTextField txtNameM) {
+		this.txtNameM = txtNameM;
+	}
+
+	public JLabel getLblHeadStatus() {
+		return lblHeadStatus;
+	}
+
+	public void setLblHeadStatus(JLabel lblHeadStatus) {
+		this.lblHeadStatus = lblHeadStatus;
+	}
+
+	public JLabel getLblSexStatus() {
+		return lblSexStatus;
+	}
+
+	public void setLblSexStatus(JLabel lblSexStatus) {
+		this.lblSexStatus = lblSexStatus;
+	}
+
+	public JLabel getLblStateStatus() {
+		return lblStateStatus;
+	}
+
+	public void setLblStateStatus(JLabel lblStateStatus) {
+		this.lblStateStatus = lblStateStatus;
+	}
+
+	public JLabel getLblDistStatus() {
+		return lblDistStatus;
+	}
+
+	public void setLblDistStatus(JLabel lblDistStatus) {
+		this.lblDistStatus = lblDistStatus;
+	}
+
+	public JLabel getLblTalStatus() {
+		return lblTalStatus;
+	}
+
+	public void setLblTalStatus(JLabel lblTalStatus) {
+		this.lblTalStatus = lblTalStatus;
+	}
+
+	public JLabel getLblVillageStatus() {
+		return lblVillageStatus;
+	}
+
+	public void setLblVillageStatus(JLabel lblVillageStatus) {
+		this.lblVillageStatus = lblVillageStatus;
+	}
+
+	public JLabel getLblDobStatus() {
+		return lblDobStatus;
+	}
+
+	public void setLblDobStatus(JLabel lblDobStatus) {
+		this.lblDobStatus = lblDobStatus;
+	}
+
+	public JLabel getLblContStatus() {
+		return lblContStatus;
+	}
+
+	public void setLblContStatus(JLabel lblContStatus) {
+		this.lblContStatus = lblContStatus;
+	}
+
+	public JLabel getLblWardStatus() {
+		return lblWardStatus;
+	}
+
+	public void setLblWardStatus(JLabel lblWardStatus) {
+		this.lblWardStatus = lblWardStatus;
+	}
+
+	public JTextField getTxtAssignMemberID() {
+		return txtAssignMemberID;
+	}
+
+	public void setTxtAssignMemberID(JTextField txtAssignMemberID) {
+		this.txtAssignMemberID = txtAssignMemberID;
+	}
+	
 	
 	public EditFamily(JDialog owner)
 	{
@@ -58,13 +167,9 @@ public class EditFamily extends JDialog
 		JLabel lblSelectFamilyID = new JLabel("Select Family ID",SwingConstants.CENTER);
 		lblSelectFamilyID.setBounds(10, 50, 120, 30);
 		owner.getContentPane().add(lblSelectFamilyID);
-		
-		
-		
+
 		txtSelectFamilyID.setBounds(150, 50, 400, 30);
 		owner.getContentPane().add(txtSelectFamilyID);
-		
-		
 		
 		JButton btnSelectFamilyID = new JButton("Select");
 		btnSelectFamilyID.setBounds(570, 50, 120, 30);
@@ -72,22 +177,16 @@ public class EditFamily extends JDialog
 		btnSelectFamilyID.addActionListener(new EditFamilyButtonHandler(this));
 		
 		
-		lblAssignedFamilyID.setBounds(10, 115, 120, 30);
-		owner.add(lblAssignedFamilyID);
-		
-		
 		listOfHead.setBounds(10, 160, 300, 50);
+		listOfHead.setVisible(false);
 		listOfHead.addItemListener(new EditFamilyListHandler(this));
-		/*for (int i = 0; i < 10; i++) {
-			listOfHead.add("swap:"+i);
-		}*/
 		owner.add(listOfHead);
 		
-		List listOfMembers = new List();
+		
 		listOfMembers.setBounds(10, 250, 300, 250);
 		listOfMembers.setMultipleMode(false);
-		listOfMembers.setEnabled(false);
-		//listOfMembers.addItemListener(new headListHandler(this));
+		listOfMembers.setVisible(false);
+		listOfMembers.addItemListener(new EditFamilyListHandler(this));
 		owner.add(listOfMembers);
 		
 		
@@ -129,7 +228,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblNameE);
 		
 		
-		JTextField txtNameE = new JTextField();
+		txtNameE = new JTextField();
 		txtNameE.setBounds(110, 10, 200, 25);
 		Utils.setComponenet(txtNameE,componenetMap);
 		infoPanel.add(txtNameE);
@@ -141,7 +240,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblNameM);
 		
 		
-		JTextField txtNameM = new JTextField();
+		txtNameM = new JTextField();
 		txtNameM.setBounds(110, 45, 200, 25);
 		txtNameM.setFont(new Font("Shivaji05", Font.BOLD,15));
 		Utils.setComponenet(txtNameM,componenetMap);
@@ -154,7 +253,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblHead);
 		
 		
-		JLabel lblHeadStatus = new JLabel();
+		lblHeadStatus = new JLabel();
 		lblHeadStatus.setBounds(460,10, 100, 25);
 		Utils.setComponenet(lblHeadStatus,componenetMap);
 		infoPanel.add(lblHeadStatus);
@@ -166,7 +265,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblSex);
 		
 		
-		JLabel lblSexStatus = new JLabel();
+		lblSexStatus = new JLabel();
 		lblSexStatus.setBounds(460,45, 100, 25);
 		Utils.setComponenet(lblSexStatus,componenetMap);
 		infoPanel.add(lblSexStatus);
@@ -184,7 +283,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblState);
 		
 		
-		JLabel lblStateStatus = new JLabel();
+		lblStateStatus = new JLabel();
 		lblStateStatus.setBounds(170,120, 100, 25);
 		Utils.setComponenet(lblStateStatus,componenetMap);
 		infoPanel.add(lblStateStatus);
@@ -196,7 +295,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblDist);
 		
 		
-		JLabel lblDistStatus =new JLabel();
+		lblDistStatus =new JLabel();
 		lblDistStatus.setBounds(350,120, 100, 25);
 		Utils.setComponenet(lblDistStatus,componenetMap);
 		infoPanel.add(lblDistStatus);
@@ -208,7 +307,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblTal);
 		
 		
-		JLabel lblTalStatus = new JLabel();
+		lblTalStatus = new JLabel();
 		lblTalStatus.setBounds(170,160, 150, 25);
 		Utils.setComponenet(lblTalStatus,componenetMap);
 		infoPanel.add(lblTalStatus);
@@ -220,7 +319,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblVillage);
 		
 		
-		JLabel lblVillageStatus = new JLabel();
+		lblVillageStatus = new JLabel();
 		lblVillageStatus.setBounds(350,160, 150, 25);
 		Utils.setComponenet(lblVillageStatus,componenetMap);
 		infoPanel.add(lblVillageStatus);
@@ -239,7 +338,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblDob);
 		
 		
-		JLabel lblDobStatus = new JLabel();
+		lblDobStatus = new JLabel();
 		lblDobStatus.setBounds(170,220, 150, 25);
 		Utils.setComponenet(lblDobStatus,componenetMap);
 		infoPanel.add(lblDobStatus);
@@ -251,7 +350,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblCont);
 		
 		
-		JLabel lblContStatus = new JLabel();
+		lblContStatus = new JLabel();
 		lblContStatus.setBounds(350,220, 150, 25);
 		Utils.setComponenet(lblContStatus,componenetMap);
 		infoPanel.add(lblContStatus);
@@ -263,7 +362,7 @@ public class EditFamily extends JDialog
 		infoPanel.add(lblWard);
 		
 		
-		JLabel lblWardStatus = new JLabel();
+		lblWardStatus = new JLabel();
 		lblWardStatus.setBounds(540,220, 50, 25);
 		Utils.setComponenet(lblWardStatus,componenetMap);
 		infoPanel.add(lblWardStatus);
@@ -276,7 +375,7 @@ public class EditFamily extends JDialog
 		
 		
 		
-		JTextField txtAssignMemberID = new JTextField();
+		txtAssignMemberID = new JTextField();
 		txtAssignMemberID.setEditable(false);
 		txtAssignMemberID.setBounds(160, 310, 200, 30);
 		Utils.setComponenet(txtAssignMemberID,componenetMap);

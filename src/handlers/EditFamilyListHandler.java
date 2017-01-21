@@ -47,7 +47,7 @@ public class EditFamilyListHandler implements ItemListener {
 		{
 			entry.getValue().setVisible(true);
 		}
-		/*editFamily.getTxtAssignMemberID().setText(member.getMember_id());
+		editFamily.getTxtAssignMemberID().setText(member.getMember_id());
 		editFamily.getTxtNameE().setText(member.getM_name_e());
 		editFamily.getTxtNameM().setText(member.getM_name_m());
 		editFamily.getLblHeadStatus().setText(member.getFamily_head_status());
@@ -58,7 +58,7 @@ public class EditFamilyListHandler implements ItemListener {
 		editFamily.getLblVillageStatus().setText(member.getM_gaon());
 		editFamily.getLblDobStatus().setText(member.getM_dob());
 		editFamily.getLblWardStatus().setText(String.valueOf(member.getM_ward()));
-		editFamily.getLblContStatus().setText(member.getM_contact());*/
+		editFamily.getLblContStatus().setText(member.getM_contact());
 	}
 
 }
