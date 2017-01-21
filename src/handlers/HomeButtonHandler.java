@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 
+import ui.AddDocuments;
 import ui.AddFamily;
 import ui.EditFamily;
 
@@ -39,6 +40,15 @@ public class HomeButtonHandler implements ActionListener
 			}
 			
 			break;
+			
+			case "Add Document":
+			{
+				AddDocuments addDocuments = new AddDocuments(new javax.swing.JDialog());
+			}
+			
+			break;
+			
+			
 
 		default:
 			break;
