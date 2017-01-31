@@ -54,8 +54,8 @@ public class SubmitMemberButtonHandler implements ActionListener {
 				member.setM_ward(Integer.parseInt(addMember.getTxtWardStatus().getText()));
 				member.setM_contact(addMember.getTxtContStatus().getText());
 				addMember.setMember(member);
-				AddFamily.listOfHead.add(member.getMember_id()+Props.STRING_SPLIT+member.getM_name_e());
-				AddFamily.btnAddFamilyHead.setEnabled(false);
+				AddFamily.getListOfHead().add(member.getMember_id()+Props.STRING_SPLIT+member.getM_name_e());
+				AddFamily.getBtnAddFamilyHead().setEnabled(false);
 				owner.dispose();
 			}
 		}

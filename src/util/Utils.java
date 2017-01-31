@@ -3,14 +3,11 @@ package util;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Toolkit;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +16,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
@@ -50,9 +46,9 @@ public class Utils
 	public void applyBasicSettingsOnWindow(JDialog owner, String title) 
 	{
 		owner.setLayout(null);
-	    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-	    int x = (int) ((dimension.getWidth() - owner.getWidth()) / 4);
-	    int y = (int) ((dimension.getHeight() - owner.getHeight()) / 5);
+	    //Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    //int x = (int) ((dimension.getWidth() - owner.getWidth()) / 4);
+	    //int y = (int) ((dimension.getHeight() - owner.getHeight()) / 5);
 	    owner.setLocation(200,100);
 	    owner.setSize(new Dimension(900, 602));
 	    owner.setModal(true);
@@ -80,9 +76,9 @@ public class Utils
 	public static void applyBasicSettingsOnWindow_Small(JDialog owner, String string)
 	{
 		owner.setLayout(null);
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-	    int x = (int) ((dimension.getWidth() - owner.getWidth()) / 10);
-	    int y = (int) ((dimension.getHeight() - owner.getHeight()) / 10);
+		//Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	   // int x = (int) ((dimension.getWidth() - owner.getWidth()) / 10);
+	    //int y = (int) ((dimension.getHeight() - owner.getHeight()) / 10);
 	    owner.setLocation(300,100);
 	    owner.setSize(new Dimension(600, 502));
 	    owner.setModal(true);
@@ -129,7 +125,7 @@ public class Utils
         System.out.println("Select query fired: "+Query);
         ResultSet set=null;
         Statement statement = DBConnection.getConnectionInstance().createStatement();
-        set=statement.executeQuery(Query);
+        set=statement.executeQuery(Query.toUpperCase());
         return set;     
 	
     }
@@ -164,7 +160,7 @@ public class Utils
 				
 				PreparedStatement pStmtFamily = DBConnection.getConnectionInstance().prepareStatement("insert into SFAMILY values(?,?)");
 				pStmtFamily.setInt(1,Integer.parseInt(familyId));
-				pStmtFamily.setString(2,((SFamily) table).getMembers().get(0).getM_name_e());
+				pStmtFamily.setString(2,((SFamily) table).getMembers().get(0).getM_name_e().toUpperCase());
 				int status = pStmtFamily.executeUpdate();
 				pStmtFamily.close();
 				/*if(status<0)
@@ -187,17 +183,17 @@ public class Utils
 						("insert into SMember values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
 				pStmtMember.setInt(1,Integer.parseInt(memberID));
 				pStmtMember.setInt(2,Integer.parseInt(FamilyID));
-				pStmtMember.setString(3, member.getM_name_e());
+				pStmtMember.setString(3, member.getM_name_e().toUpperCase());
 				pStmtMember.setString(4, member.getM_name_m());
 				if(member.getFamily_head_status()!=null)
-					pStmtMember.setString(5, member.getFamily_head_status());
+					pStmtMember.setString(5, member.getFamily_head_status().toUpperCase());
 				else
-					pStmtMember.setString(5, "No");
-				pStmtMember.setString(6, member.getM_sex());
-				pStmtMember.setString(7, member.getM_state());
-				pStmtMember.setString(8, member.getM_dist());
-				pStmtMember.setString(9, member.getM_tal());
-				pStmtMember.setString(10, member.getM_gaon());
+					pStmtMember.setString(5, "NO");
+				pStmtMember.setString(6, member.getM_sex().toUpperCase());
+				pStmtMember.setString(7, member.getM_state().toUpperCase());
+				pStmtMember.setString(8, member.getM_dist().toUpperCase());
+				pStmtMember.setString(9, member.getM_tal().toUpperCase());
+				pStmtMember.setString(10, member.getM_gaon().toUpperCase());
 				pStmtMember.setString(11, member.getM_dob());
 				pStmtMember.setInt(12, member.getM_ward());
 				pStmtMember.setString(13, member.getM_contact());
@@ -231,7 +227,7 @@ public class Utils
 	        try 
 	        {
 				statement = DBConnection.getConnectionInstance().createStatement();
-				statement.executeQuery(query);
+				statement.executeQuery(query.toUpperCase());
 				statement.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -299,7 +295,7 @@ public class Utils
                 try
                 {
                     String sql="Select m_contact from SMember where member_id="+memberID;
-                    ResultSet set=querySELECT(sql);
+                    ResultSet set=querySELECT(sql.toUpperCase());
                     //System.out.println(sql);
                     while (set.next())
                     {

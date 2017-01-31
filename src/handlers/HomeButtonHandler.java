@@ -13,6 +13,7 @@ import ui.SendSMS;
 public class HomeButtonHandler implements ActionListener
 {
 	JDialog parent;
+	
 	public HomeButtonHandler(JDialog parent)
 	{
 		this.parent = parent;
@@ -25,7 +26,7 @@ public class HomeButtonHandler implements ActionListener
 		{
 			case "Add Family":
 			{
-				AddFamily addFamily = new AddFamily(new javax.swing.JDialog());
+				new AddFamily(new javax.swing.JDialog());
 			}
 			
 			break;
@@ -37,20 +38,20 @@ public class HomeButtonHandler implements ActionListener
 			break;
 			case "Edit Family":
 			{
-				EditFamily addMemberIntoFamily = new EditFamily(new javax.swing.JDialog());
+				new EditFamily(new javax.swing.JDialog());
 			}
 			
 			break;
 			
 			case "Add Document":
 			{
-				AddDocuments addDocuments = new AddDocuments(new javax.swing.JDialog());
+				new AddDocuments(new javax.swing.JDialog());
 			}
 			
 			break;
 			case "Send Bulk SMS":
 			{
-				SendSMS sendSMS = new SendSMS(new javax.swing.JDialog());
+				new SendSMS(new javax.swing.JDialog());
 			}
 			
 			break;

@@ -16,7 +16,11 @@ import javax.swing.border.LineBorder;
 
 class SuggestionLabel extends JLabel {
 
-    private boolean focused = false;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private boolean focused = false;
     private final JWindow autoSuggestionsPopUpWindow;
     private final JTextField textField;
     private final AutoSuggestor autoSuggestor;
@@ -51,7 +55,12 @@ class SuggestionLabel extends JLabel {
 
         getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true), "Enter released");
         getActionMap().put("Enter released", new AbstractAction() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void actionPerformed(ActionEvent ae) {
                 replaceWithSuggestedText();
                 autoSuggestionsPopUpWindow.setVisible(false);

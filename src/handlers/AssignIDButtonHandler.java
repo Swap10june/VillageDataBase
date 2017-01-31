@@ -34,9 +34,9 @@ public class AssignIDButtonHandler implements ActionListener {
 		if(e.getActionCommand().equalsIgnoreCase("Assign "))
 		{
 			String familyID = "FID-"+Utils.getUtilityInstance().getMaxFamilyID();
-			AddFamily.txtAssignFamilyID.setText(familyID);
-			addFamily.lblAssignedFamilyID.setText(familyID);
-			addFamily.btnAddFamilyHead.setEnabled(true);
+			addFamily.getTxtAssignFamilyID().setText(familyID);
+			addFamily.getLblAssignedFamilyID().setText(familyID);
+			AddFamily.getBtnAddFamilyHead().setEnabled(true);
 			JButton btn = (JButton) e.getSource();
 			btn.setEnabled(false);
 			

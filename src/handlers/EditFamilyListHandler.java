@@ -9,9 +9,7 @@ import java.util.Map.Entry;
 import javax.swing.JComponent;
 
 import beans.SMember;
-import ui.AddFamily;
 import ui.EditFamily;
-import util.Props;
 import util.Utils;
 
 public class EditFamilyListHandler implements ItemListener {

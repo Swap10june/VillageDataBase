@@ -3,16 +3,12 @@ package handlers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import beans.SFamily;
 import beans.SMember;
 import src.Test;
 import ui.AddDocuments;
 import ui.AddFamily;
-import ui.AddMember;
-import util.Utils;
 
 public class SelectDocHandler implements ActionListener {
 

@@ -2,7 +2,6 @@ package handlers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.acl.Owner;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class SubmitFamilyButtonHandler implements ActionListener {
 		{
 			try
 			{
-				int familyCount = Utils.getUtilityInstance().queryINSERT(family);
+				Utils.getUtilityInstance().queryINSERT(family);
 				int memberCount=0;
 				for (int i = 0; i < members.size(); i++)
 				{
@@ -55,10 +54,10 @@ public class SubmitFamilyButtonHandler implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		else
+		/*else
 		{
 			JOptionPane.showMessageDialog (parent, "Empty Family...!", "ERROR", JOptionPane.ERROR_MESSAGE);
-		}
+		}*/
 	}
 
 }

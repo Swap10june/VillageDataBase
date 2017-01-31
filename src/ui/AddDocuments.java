@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.List;
 
@@ -14,10 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import beans.SFamily;
-import handlers.AddHeadButtonHandler;
-import handlers.AssignIDButtonHandler;
 import handlers.SelectDocHandler;
-import handlers.SubmitFamilyButtonHandler;
 import util.Utils;
 
 public class AddDocuments extends JDialog {
@@ -169,7 +165,7 @@ public class AddDocuments extends JDialog {
 	}
 
 	public void setFamily(SFamily family) {
-		this.family = family;
+		AddDocuments.family = family;
 	}
 
 	public AddDocuments(JDialog owner)
@@ -253,6 +249,7 @@ public class AddDocuments extends JDialog {
 		
 	}
 
+	@SuppressWarnings("unused")
 	private void initPanelUI(JPanel infoPanel) 
 	{
 		JLabel lblNameE = new JLabel("Name(Eng.)");

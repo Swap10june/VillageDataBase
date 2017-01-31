@@ -2,7 +2,6 @@ package ui;
 
 import handlers.EditFamilyButtonHandler;
 import handlers.EditFamilyListHandler;
-import handlers.AddFamilyListHandler;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -22,7 +21,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import util.AutoSuggestor;
-import util.DBConnection;
 import util.Utils;
 
 public class EditFamily extends JDialog
@@ -233,6 +231,7 @@ public class EditFamily extends JDialog
 		middleBody.setBounds(0, 505, 894, 1);
 		middleBody.setBorder(BorderFactory.createLineBorder(Color.black));
 		owner.add(middleBody);
+		@SuppressWarnings("unused")
 		AutoSuggestor autoSuggestor = new AutoSuggestor(txtSelectFamilyID, owner, null, Color.WHITE.brighter(), Color.BLUE, Color.RED, 0.75f)
 		{
 		    protected boolean wordTyped(String typedWord) {

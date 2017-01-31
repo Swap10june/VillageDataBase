@@ -4,10 +4,6 @@ import handlers.SendSMSBtnsHandler;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -16,10 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-
 import util.Utils;
 
 public class SendSMS extends JDialog{
@@ -29,15 +22,20 @@ public class SendSMS extends JDialog{
 	 */
 	private static final long serialVersionUID = 4751620116396415943L;
 	private JPanel upperBody = new JPanel();
+	
+
 	private JPanel middlePanel = new JPanel();
+	
+
 	private JPanel footerPanel = new JPanel();	
 
 	private JTextField textWard = new JTextField();
+	private JTextField textSex = new JTextField();
+	private JTextField textSurName = new JTextField();
+	private JTextField textHeadStatus = new JTextField();
 	
 
-	private JTextField textAdd1 = new JTextField();
-	private JTextField textAdd2 = new JTextField();
-	private JTextField textSurName = new JTextField();
+	
 
 	public SendSMS(JDialog owner)
 	{
@@ -78,22 +76,13 @@ public class SendSMS extends JDialog{
         });
 		owner.add(textWard);
 		
-		JLabel lblAdd1 = new JLabel("Enter Address1");
-		lblAdd1.setBounds(240, 40, 100, 25);
-		owner.add(lblAdd1);
-		
-		textAdd1.setBounds(240, 70, 100, 25);
-		textAdd1.setToolTipText("Address1");
-		owner.add(textAdd1);
-		
-		
-		JLabel lblAdd2 = new JLabel("Enter Address2");
+		JLabel lblAdd2 = new JLabel("Sex");
 		lblAdd2.setBounds(350, 40, 100, 25);
 		owner.add(lblAdd2);
 		
-		textAdd2.setBounds(350, 70, 100, 25);
-		textAdd2.setToolTipText("Address2");
-		owner.add(textAdd2);
+		textSex.setBounds(350, 70, 100, 25);
+		textSex.setToolTipText("Sex");
+		owner.add(textSex);
 		
 		JLabel lblSurName = new JLabel("Enter Surname");
 		lblSurName.setBounds(460, 40, 100, 25);
@@ -102,6 +91,15 @@ public class SendSMS extends JDialog{
 		textSurName.setBounds(460, 70, 100, 25);
 		textSurName.setToolTipText("Surname");
 		owner.add(textSurName);
+		
+		JLabel lblAdd1 = new JLabel("Head Status");
+		lblAdd1.setBounds(240, 40, 100, 25);
+		owner.add(lblAdd1);
+		
+		textHeadStatus.setBounds(240, 70, 100, 25);
+		textHeadStatus.setToolTipText("Head Status");
+		owner.add(textHeadStatus);
+		
 		
 		JButton BtnShow = new JButton("Show");
 		BtnShow.setBounds(580, 50, 100, 25);
@@ -112,7 +110,6 @@ public class SendSMS extends JDialog{
 		middlePanel.setVisible(false);
 		middlePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		middlePanel.setBackground(Color.gray);
-		initUIOFMiddleBody(middlePanel);
 		owner.add(middlePanel);
 		
 		footerPanel.setBounds(0, 500, 894, 40);
@@ -133,10 +130,27 @@ public class SendSMS extends JDialog{
         footerPanel.add(btnSendSMS);
         btnSendSMS.addActionListener(new SendSMSBtnsHandler(this,owner));
 	}
-	
-	private void initUIOFMiddleBody(JPanel middlePanel2)
-	{
-		
+	public JPanel getUpperBody() {
+		return upperBody;
+	}
+
+	public void setUpperBody(JPanel upperBody) {
+		this.upperBody = upperBody;
+	}
+	public JPanel getMiddlePanel() {
+		return middlePanel;
+	}
+
+	public void setMiddlePanel(JPanel middlePanel) {
+		this.middlePanel = middlePanel;
+	}
+
+	public JPanel getFooterPanel() {
+		return footerPanel;
+	}
+
+	public void setFooterPanel(JPanel footerPanel) {
+		this.footerPanel = footerPanel;
 	}
 
 	public JTextField getTextWard() {
@@ -147,20 +161,12 @@ public class SendSMS extends JDialog{
 		this.textWard = textWard;
 	}
 
-	public JTextField getTextAdd1() {
-		return textAdd1;
+	public JTextField getTextSex() {
+		return textSex;
 	}
 
-	public void setTextAdd1(JTextField textAdd1) {
-		this.textAdd1 = textAdd1;
-	}
-
-	public JTextField getTextAdd2() {
-		return textAdd2;
-	}
-
-	public void setTextAdd2(JTextField textAdd2) {
-		this.textAdd2 = textAdd2;
+	public void setTextSex(JTextField textSex) {
+		this.textSex = textSex;
 	}
 
 	public JTextField getTextSurName() {
@@ -170,26 +176,12 @@ public class SendSMS extends JDialog{
 	public void setTextSurName(JTextField textSurName) {
 		this.textSurName = textSurName;
 	}
-	public JPanel getMiddlePanel() {
-		return middlePanel;
+
+	public JTextField getTextHeadStatus() {
+		return textHeadStatus;
 	}
 
-	public void setMiddlePanel(JPanel upperBody1) {
-		this.middlePanel = upperBody1;
-	}
-	
-	public JPanel getFooterPanel() {
-		return footerPanel;
-	}
-
-	public void setFooterPanel(JPanel footerPanel) {
-		this.footerPanel = footerPanel;
-	}
-	public JPanel getUpperBody() {
-		return upperBody;
-	}
-
-	public void setUpperBody(JPanel upperBody) {
-		this.upperBody = upperBody;
+	public void setTextHeadStatus(JTextField textHeadStatus) {
+		this.textHeadStatus = textHeadStatus;
 	}
 }

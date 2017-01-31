@@ -48,7 +48,7 @@ public class DBConnection
         if(m_connection==null)
         {
            System.out.println("New Db Connection");
-           DBConnection dbConnection = new DBConnection();
+           new DBConnection();
            return m_connection;
           
         }

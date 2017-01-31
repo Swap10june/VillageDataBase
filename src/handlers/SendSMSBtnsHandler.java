@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import ui.SendSMS;
+import util.Utils;
 
 public class SendSMSBtnsHandler implements ActionListener {
 
@@ -38,9 +42,9 @@ public class SendSMSBtnsHandler implements ActionListener {
 			{
 				if(
 						!sendSMS.getTextWard().getText().isEmpty() || 
-						!sendSMS.getTextAdd1().getText().isEmpty() ||
-						!sendSMS.getTextAdd2().getText().isEmpty() ||
-						!sendSMS.getTextSurName().getText().isEmpty())
+						!sendSMS.getTextSex().getText().isEmpty() ||
+						!sendSMS.getTextSurName().getText().isEmpty() ||
+						!sendSMS.getTextHeadStatus().getText().isEmpty())
 				{
 					JPanel panel = sendSMS.getMiddlePanel();
 					table = initTableUI(panel);
@@ -124,12 +128,12 @@ public class SendSMSBtnsHandler implements ActionListener {
 	{
 		//headers for the table
         String[] columns = new String[] {
-            "Member ID","Member Name", "Ward", "Select"
+            "Member ID","Member Name", "Mob No", "Select"
         };
         
-        final Class[] columnClass = new Class[] {
-        		String.class,String.class,Integer.class, Boolean.class
-            };
+        /*final Class[] columnClass = new Class[] {
+        		String.class,String.class,String.class, Boolean.class
+            };*/
         
       //create table model with data
         model = new DefaultTableModel() {
@@ -150,7 +154,20 @@ public class SendSMSBtnsHandler implements ActionListener {
             @Override
             public Class<?> getColumnClass(int columnIndex)
             {
-                return columnClass[columnIndex];
+            	switch (columnIndex) {
+				case 0:
+					return String.class;
+				case 1:
+					return String.class;
+				case 2:
+					return String.class;
+				case 3:
+					return Boolean.class;
+				}
+				return null;
+				
+				/*return columns[columnIndex];*/
+                
             }
         };
      // add header in table model     
@@ -166,12 +183,36 @@ public class SendSMSBtnsHandler implements ActionListener {
 
 	private void setModelRowData(DefaultTableModel model)
 	{
-		for (int count = 1; count <= 100; count++) 
-        {
-        	model.addRow(new Object[]
-        			{ 	"MId-"+count, "Member:"+count,count,false}
+		try
+		{
+			String query = null;
+			if(!sendSMS.getTextWard().getText().isEmpty())
+				query = "select * from SMember where m_ward="+Integer.parseInt(sendSMS.getTextWard().getText());
+			else if(!sendSMS.getTextSex().getText().isEmpty())
+				query = "select * from SMember where m_sex='"+sendSMS.getTextSex().getText()+"'";
+			else if(!sendSMS.getTextHeadStatus().getText().isEmpty())
+				query = "select * from SMember where family_head_status='"+sendSMS.getTextHeadStatus().getText()+"'";
+			else if(!sendSMS.getTextSurName().getText().isEmpty())
+				query = "select * from SMember where m_name_e LIKE '%"+sendSMS.getTextSurName().getText()+"%'";
+			else
+				query = "select * from SMember";
+			ResultSet set;
+		
+			set = Utils.getUtilityInstance().querySELECT(query.toUpperCase());
+		
+		while(set.next())
+		{
+			model.addRow(new Object[]
+        			{ 	set.getInt("member_id"), set.getString("m_name_e"),set.getString("m_contact"),false}
         			);
         }
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

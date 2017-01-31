@@ -27,8 +27,8 @@ public class AddFamilyListHandler implements ItemListener
 		SMember member = addFamily.getFamily().getMember(str[0]);
 		
 		populateMemberInfo(member);
-		addFamily.btnSubmitFamily.setEnabled(true);
-		AddFamily.listOfHead.setEnabled(false);
+		addFamily.getBtnSubmitFamily().setEnabled(true);
+		AddFamily.getListOfHead().setEnabled(false);
 	}
 	private void populateMemberInfo(SMember member)
 	{

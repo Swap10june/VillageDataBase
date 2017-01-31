@@ -22,13 +22,13 @@ public class AddHeadButtonHandler implements ActionListener {
 	{
 		if(e.getActionCommand().equalsIgnoreCase("Add Family Head"))
 		{
-			parent.getFamily().setFamilyId(parent.txtAssignFamilyID.getText());
+			parent.getFamily().setFamilyId(parent.getTxtAssignFamilyID().getText());
 			AddMember addMember = new AddMember(new javax.swing.JDialog(),e.getActionCommand()); 
 			if(addMember.getMember()!=null)
 			{
 				addMember.getMember().setFamily_id(parent.getFamily().getFamilyId());
 				parent.getFamily().addMemberIntoFamily(addMember.getMember());
-				parent.listOfHead.setEnabled(true);
+				AddFamily.getListOfHead().setEnabled(true);
 			}
 			
 		}
@@ -40,7 +40,7 @@ public class AddHeadButtonHandler implements ActionListener {
 			{
 				addMember.getMember().setFamily_id(parent.getFamily().getFamilyId());
 				parent.getFamily().addMemberIntoFamily(addMember.getMember());
-				parent.listOfMembers.setEnabled(true);
+				AddFamily.listOfMembers.setEnabled(true);
 			}
 			
 		}
