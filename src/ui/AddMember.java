@@ -146,7 +146,7 @@ public class AddMember extends JDialog {
 	public AddMember(JDialog owner, String string)
 	{
 		super(owner);
-		Utils.applyBasicSettingsOnWindow1(owner,string);
+		Utils.applyBasicSettingsOnWindow_Small(owner,string);
 		buttonString =  string;
 		initUI(owner);
 		owner.setVisible(true);

@@ -22,30 +22,30 @@ public class EditFamilyButtonHandler implements ActionListener
 	{
 		if(arg0.getActionCommand().equalsIgnoreCase("Select"))
 		{
-			String textString = editFamily.txtSelectFamilyID.getText();
+			String textString = editFamily.getTxtSelectFamilyID().getText();
 			String []array = textString.split(":");
 			//int family_id = Integer.parseInt(array[2]);
 			
 			try
 			{
 				String head = null;
-				ResultSet set =Utils.querySELECT("Select family_head from SFAMILY where family_id="+array[2]);
+				ResultSet set =Utils.getUtilityInstance().querySELECT("Select family_head from SFAMILY where family_id="+array[2]);
 				while(set.next())
 	            {
-					if(editFamily.listOfHead.getItemCount() == 0)
+					if(editFamily.getListOfHead().getItemCount() == 0)
 					{
-						editFamily.listOfHead.setVisible(true);
-						editFamily.listOfHead.add(set.getString("family_head"));
+						editFamily.getListOfHead().setVisible(true);
+						editFamily.getListOfHead().add(set.getString("family_head"));
 						head = set.getString("family_head");
 					}
 	            }
-				set =Utils.querySELECT("Select * from SMember where family_id="+array[2]);
+				set =Utils.getUtilityInstance().querySELECT("Select * from SMember where family_id="+array[2]);
 				while(set.next())
 	            {
-					editFamily.listOfMembers.setVisible(true);
+					editFamily.getListOfMembers().setVisible(true);
 					if(!set.getString("M_NAME_E").equalsIgnoreCase(head))
-						editFamily.listOfMembers.add(set.getString("m_name_e"));
-					editFamily.listOfMembers.setEnabled(true);
+						editFamily.getListOfMembers().add(set.getString("m_name_e"));
+					editFamily.getListOfMembers().setEnabled(true);
 	            }
 				
 			} catch (ClassNotFoundException e)

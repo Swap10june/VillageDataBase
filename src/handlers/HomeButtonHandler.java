@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import ui.AddDocuments;
 import ui.AddFamily;
 import ui.EditFamily;
+import ui.SendSMS;
 
 public class HomeButtonHandler implements ActionListener
 {
@@ -44,6 +45,12 @@ public class HomeButtonHandler implements ActionListener
 			case "Add Document":
 			{
 				AddDocuments addDocuments = new AddDocuments(new javax.swing.JDialog());
+			}
+			
+			break;
+			case "Send Bulk SMS":
+			{
+				SendSMS sendSMS = new SendSMS(new javax.swing.JDialog());
 			}
 			
 			break;

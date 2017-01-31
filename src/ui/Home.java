@@ -9,15 +9,14 @@ import util.Utils;
 
 public class Home extends JDialog {
 
-	/**
-	 * 
-	 */
+	
+
 	private static final long serialVersionUID = 1L;
 
 	public Home(JDialog owner)
 	{
 		super(owner);
-		Utils.applyBasicSettingsOnWindow(owner,"Home");
+		Utils.getUtilityInstance().applyBasicSettingsOnWindow(owner,"Home");
 		initUI(owner);
 		owner.setVisible(true);
 	}

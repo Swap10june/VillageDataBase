@@ -175,7 +175,7 @@ public class AddDocuments extends JDialog {
 	public AddDocuments(JDialog owner)
 	{
 		super(owner);
-		Utils.applyBasicSettingsOnWindow(owner,"Add Document");
+		Utils.getUtilityInstance().applyBasicSettingsOnWindow(owner,"Add Document");
 		initUI(owner);
 		owner.setVisible(true);
 	}

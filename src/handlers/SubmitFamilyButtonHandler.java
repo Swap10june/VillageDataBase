@@ -34,11 +34,11 @@ public class SubmitFamilyButtonHandler implements ActionListener {
 		{
 			try
 			{
-				int familyCount = Utils.queryINSERT(family);
+				int familyCount = Utils.getUtilityInstance().queryINSERT(family);
 				int memberCount=0;
 				for (int i = 0; i < members.size(); i++)
 				{
-					memberCount += Utils.queryINSERT(members.get(i));
+					memberCount += Utils.getUtilityInstance().queryINSERT(members.get(i));
 				}
 				if(members.size()==memberCount)
 				{

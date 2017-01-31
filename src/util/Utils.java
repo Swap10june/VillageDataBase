@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,13 +22,32 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 
 import beans.SFamily;
 import beans.SMember;
 
 public class Utils 
 {
-	public static void applyBasicSettingsOnWindow(JDialog owner, String title) 
+	private static Utils s_utils=null;
+    private Utils()
+    {
+    	
+    }
+    public static Utils getUtilityInstance()
+    {
+        if(s_utils==null)
+        {
+           return new Utils();
+          
+        }
+        else
+        {
+         //System.out.println("Return existing connection");
+            return s_utils;
+        }
+    }
+	public void applyBasicSettingsOnWindow(JDialog owner, String title) 
 	{
 		owner.setLayout(null);
 	    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -57,7 +77,7 @@ public class Utils
 	    owner.add(footerLabel);
 	}
 
-	public static void applyBasicSettingsOnWindow1(JDialog owner, String string)
+	public static void applyBasicSettingsOnWindow_Small(JDialog owner, String string)
 	{
 		owner.setLayout(null);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -86,11 +106,11 @@ public class Utils
 	    footerLabel.setBorder(border);
 	    owner.add(footerLabel);
 	}
-	public static String getMaxFamilyID()
+	public String getMaxFamilyID()
     {
         try
         {
-            ResultSet set = Utils.querySELECT("SELECT MAX(family_id) FROM SFAMILY");
+            ResultSet set = querySELECT("SELECT MAX(family_id) FROM SFAMILY");
             String familyID=null;
             while(set.next())
             {
@@ -103,7 +123,7 @@ public class Utils
         }
         return "Error";
     }
-    public  static ResultSet querySELECT(String Query) throws ClassNotFoundException, SQLException
+    public  ResultSet querySELECT(String Query) throws ClassNotFoundException, SQLException
     {
 	  
         System.out.println("Select query fired: "+Query);
@@ -114,11 +134,11 @@ public class Utils
 	
     }
 
-	public static String getMaxMemberID(String familyId)
+	public String getMaxMemberID(String familyId)
 	{
 		try
         {
-            ResultSet set = Utils.querySELECT("SELECT MAX(member_id) FROM SMEMBER where family_id="+familyId);
+            ResultSet set = querySELECT("SELECT MAX(member_id) FROM SMEMBER where family_id="+familyId);
             String memberID=null;
             while(set.next())
             {
@@ -131,7 +151,7 @@ public class Utils
         }
         return "Error";
 	}
-	public  static int queryINSERT(Object table) throws ClassNotFoundException, SQLException
+	public  int queryINSERT(Object table) throws ClassNotFoundException, SQLException
 	{	
 		try
 		{
@@ -202,7 +222,7 @@ public class Utils
 		return 0;
 	}
 
-	public static void queryUpdate(SFamily family, String columName,
+	public void queryUpdate(SFamily family, String columName,
 			String columValue)
 	{
 		String query="update SFamily set "+columName+"="+columValue;
@@ -221,7 +241,7 @@ public class Utils
 	        
 	}
 
-	public static ArrayList<String> queryMultiColumnSelect(String table, Map<String,String> columnNames)
+	public ArrayList<String> queryMultiColumnSelect(String table, Map<String,String> columnNames)
 	{
 		ArrayList<String> list = new ArrayList<>();
 		String columName = "";
@@ -240,7 +260,7 @@ public class Utils
 		try
 		{
 			
-			ResultSet set = Utils.querySELECT("SELECT "+columName+" FROM "+table);
+			ResultSet set = querySELECT("SELECT "+columName+" FROM "+table);
 			String prefix = "FID-";
 			list.clear();
 			while(set.next())
@@ -259,9 +279,40 @@ public class Utils
 		}
 		return null;		
 	}
-	public static void setComponenet(JComponent component, Map<String,JComponent> componenetMap)
+	public void setComponenet(JComponent component, Map<String,JComponent> componenetMap)
 	{
 		component.setName(component.toString());
 		componenetMap.put(component.getName(), component);
 	}
+	public  ArrayList<String> getAllContactsForSelectedMembers(DefaultTableModel model) 
+    {
+        ArrayList<String> mobileNoCollection;
+        mobileNoCollection = new ArrayList<String>();
+        for (int i = 0; i <model.getRowCount() ; i++)
+        {
+            String str=model.getValueAt(i, 3).toString();
+            int memberID=Integer.parseInt(model.getValueAt(i, 0).toString());
+
+            if(str.equalsIgnoreCase("true"))
+            {
+               
+                try
+                {
+                    String sql="Select m_contact from SMember where member_id="+memberID;
+                    ResultSet set=querySELECT(sql);
+                    //System.out.println(sql);
+                    while (set.next())
+                    {
+                        if(set.getString("m_contact")!=null)
+                        {
+                            mobileNoCollection.add(set.getString("m_contact"));//phone
+                        }
+                    }
+                } catch (SQLException | ClassNotFoundException ex) {
+                    //Logger.getLogger(ProjectUtils.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return mobileNoCollection;
+    }
 }

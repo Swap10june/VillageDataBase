@@ -28,7 +28,7 @@ public class EditFamilyListHandler implements ItemListener {
 		
 		try {
 			String selectedItem = ((java.awt.List) arg0.getSource()).getSelectedItem().toString();
-			ResultSet set =Utils.querySELECT("select * from SMember where m_name_e='"+selectedItem+"'");
+			ResultSet set =Utils.getUtilityInstance().querySELECT("select * from SMember where m_name_e='"+selectedItem+"'");
 			SMember member = SMember.createMemberFromDBInstance(set);
 			
 			populateMemberInfo(member);
@@ -43,7 +43,7 @@ public class EditFamilyListHandler implements ItemListener {
 	private void populateMemberInfo(SMember member)
 	{
 		
-		for (Entry<String, JComponent> entry : editFamily.componenetMap.entrySet())
+		for (Entry<String, JComponent> entry : editFamily.getComponenetMap().entrySet())
 		{
 			entry.getValue().setVisible(true);
 		}
