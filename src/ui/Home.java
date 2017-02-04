@@ -27,18 +27,9 @@ public class Home extends JDialog {
 		for (int i = 0 , xPos= 10, yPos=60;i < btnArray.length; i++,yPos+=50)
 		{
 			btnArray[i] = new JButton(Props.SHOME_BUTTONS[i]);
-			if(i<=3)
-			{
-				
-				btnArray[i].setBounds(xPos,yPos, 150, 25);
-				owner.add(btnArray[i]);
-				btnArray[i].addActionListener(new HomeButtonHandler(owner));
-			}
-			else
-			{
-				btnArray[i].setBounds(10, 60, 150, 25);
-				owner.add(btnArray[i]);
-			}
+			btnArray[i].setBounds(xPos,yPos, 150, 25);
+			owner.add(btnArray[i]);
+			btnArray[i].addActionListener(new HomeButtonHandler(owner));
 		}
 		//owner.repaint();
 	}

@@ -4,20 +4,26 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import ui.SendSMS;
+import util.Props;
 import util.Utils;
 
 public class SendSMSBtnsHandler implements ActionListener {
@@ -42,16 +48,17 @@ public class SendSMSBtnsHandler implements ActionListener {
 			{
 				if(
 						!sendSMS.getTextWard().getText().isEmpty() || 
-						!sendSMS.getTextSex().getText().isEmpty() ||
+						sendSMS.getComboHeadStatus().getSelectedIndex()!=0 ||
 						!sendSMS.getTextSurName().getText().isEmpty() ||
-						!sendSMS.getTextHeadStatus().getText().isEmpty())
+						sendSMS.getComboSex().getSelectedIndex()!=0)
 				{
 					JPanel panel = sendSMS.getMiddlePanel();
 					table = initTableUI(panel);
 			        panel.setVisible(true);
 			        panel = sendSMS.getFooterPanel();
 			        panel.setVisible(true);
-			        
+			        sendSMS.getBtnSelectAll().setEnabled(true);
+			        sendSMS.getBtnClearModel().setEnabled(true);
 				}
 				else
 				{
@@ -67,6 +74,9 @@ public class SendSMSBtnsHandler implements ActionListener {
 		             model.setValueAt(true, i, 3);  
 
 		           }
+				sendSMS.getBtnSelectAll().setEnabled(false);
+				sendSMS.getBtnDeSelectAll().setEnabled(true);
+				sendSMS.getBtnSendSMS().setEnabled(true);
 			}
 			break;
 			case "De-Select":
@@ -76,16 +86,29 @@ public class SendSMSBtnsHandler implements ActionListener {
 		             model.setValueAt(false, i, 3);  
 
 		           }
+				sendSMS.getBtnSelectAll().setEnabled(true);
+				sendSMS.getBtnDeSelectAll().setEnabled(false);
+				sendSMS.getBtnSendSMS().setEnabled(false);
+			}
+			break;
+			case "Clear":
+			{
+				model.setRowCount(0);
+				parent.dispose();
+				new SendSMS(new javax.swing.JDialog());
+				
 			}
 			break;
 			case "Send SMS":
 			{
 				int selectedRows=0;
+				Map<String,String> records = new HashMap<String,String>();
 	            for (int i = 0; i <model.getRowCount() ; i++)
 	            {
 	                //System.out.println(model.getValueAt(i, 0));
 	                if(model.getValueAt(i, 3).toString().equalsIgnoreCase("true"))
 	                {
+	                	records.put( model.getValueAt(i, 2).toString(),model.getValueAt(i, 1).toString());
 	                    selectedRows++;
 	                }
 	            }
@@ -93,10 +116,7 @@ public class SendSMSBtnsHandler implements ActionListener {
 	            {
 	                try
 	                {
-	                    /*util.createTextForBulkSMS(this);
-	                    dispose();
-	                    objSelectCriteriaToCreateStickerFrame.dispose();*/
-	                	
+	                	File textFile =Utils.getUtilityInstance().generateTextFileToSendSMS(records);
 	                	JOptionPane.showMessageDialog(null, "Click OK and wait for website to Open..Please select latest text file from \"C:\\Temp\" folder!");
 	                	parent.dispose();
 	                    Desktop desktop = Desktop.getDesktop();
@@ -127,7 +147,8 @@ public class SendSMSBtnsHandler implements ActionListener {
 	private JTable initTableUI(JPanel panel)
 	{
 		//headers for the table
-        String[] columns = new String[] {
+        String[] columns = new String[]
+        		{
             "Member ID","Member Name", "Mob No", "Select"
         };
         
@@ -172,6 +193,14 @@ public class SendSMSBtnsHandler implements ActionListener {
         };
      // add header in table model     
         model.setColumnIdentifiers(columns);
+        model.addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent arg0)
+			{
+				sendSMS.getBtnSendSMS().setEnabled(true);	
+			}
+		});
         setModelRowData(model);
         
         table = new JTable(model);
@@ -185,27 +214,51 @@ public class SendSMSBtnsHandler implements ActionListener {
 	{
 		try
 		{
-			String query = null;
-			if(!sendSMS.getTextWard().getText().isEmpty())
-				query = "select * from SMember where m_ward="+Integer.parseInt(sendSMS.getTextWard().getText());
-			else if(!sendSMS.getTextSex().getText().isEmpty())
-				query = "select * from SMember where m_sex='"+sendSMS.getTextSex().getText()+"'";
-			else if(!sendSMS.getTextHeadStatus().getText().isEmpty())
-				query = "select * from SMember where family_head_status='"+sendSMS.getTextHeadStatus().getText()+"'";
-			else if(!sendSMS.getTextSurName().getText().isEmpty())
-				query = "select * from SMember where m_name_e LIKE '%"+sendSMS.getTextSurName().getText()+"%'";
+			String query = "select * from SMember where ";
+			if(Props.queryTemp==null)
+			{
+				
+				if(!sendSMS.getTextWard().getText().isEmpty())
+					query =  query+" m_ward="+Integer.parseInt(sendSMS.getTextWard().getText());
+				if(!sendSMS.getTextSurName().getText().isEmpty())
+					query = query+" m_name_e LIKE '%"+sendSMS.getTextSurName().getText()+"%'";
+				if(sendSMS.getComboSex().getSelectedIndex()!=0 &&( !sendSMS.getTextWard().getText().isEmpty() ||!sendSMS.getTextSurName().getText().isEmpty()))
+					query = query+" and m_sex='"+sendSMS.getComboSex().getSelectedItem()+"'";
+				else if(sendSMS.getComboSex().getSelectedIndex()!=0)
+					query = query+" m_sex='"+sendSMS.getComboSex().getSelectedItem()+"'";
+				if(sendSMS.getComboHeadStatus().getSelectedIndex()!=0 &&( !sendSMS.getTextWard().getText().isEmpty() ||!sendSMS.getTextSurName().getText().isEmpty()))
+					query = query+" and family_head_status='"+sendSMS.getComboHeadStatus().getSelectedItem()+"'";
+				else if(sendSMS.getComboHeadStatus().getSelectedIndex()!=0)
+					query = query+" family_head_status='"+sendSMS.getComboHeadStatus().getSelectedItem()+"'";
+			}
 			else
-				query = "select * from SMember";
+			{
+				query=Props.queryTemp;
+			}
 			ResultSet set;
 		
 			set = Utils.getUtilityInstance().querySELECT(query.toUpperCase());
 		
-		while(set.next())
-		{
-			model.addRow(new Object[]
-        			{ 	set.getInt("member_id"), set.getString("m_name_e"),set.getString("m_contact"),false}
-        			);
-        }
+			if(Props.queryTemp==null)
+			{
+				while(set.next())
+				{
+					model.addRow(new Object[]
+								{ 	set.getInt("member_id"), set.getString("m_name_e"),set.getString("m_contact"),false}
+								);
+				}
+			}
+			else
+			{
+				int num = 1;
+				while(set.next())
+				{
+					model.addRow(new Object[]
+								{ num++,set.getString("S_NAME"),set.getString("S_NUMBER"),false}
+								);
+		        }
+			}
+		
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

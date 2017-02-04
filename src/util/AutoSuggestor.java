@@ -27,7 +27,8 @@ public class AutoSuggestor {
     private String typedWord;
     private final ArrayList<String> dictionary = new ArrayList<>();
     private int currentIndexOfSpace, tW, tH;
-    private DocumentListener documentListener = new DocumentListener() {
+    private DocumentListener documentListener = new DocumentListener()
+    {
         @Override
         public void insertUpdate(DocumentEvent de) {
             checkForAndShowSuggestions();

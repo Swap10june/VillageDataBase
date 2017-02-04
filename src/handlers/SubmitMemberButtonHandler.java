@@ -13,8 +13,9 @@ import util.Props;
 
 public class SubmitMemberButtonHandler implements ActionListener {
 
-	AddMember addMember;
-	JDialog owner;
+	private AddMember 	addMember;
+	private JDialog 	owner;
+	
 	public SubmitMemberButtonHandler(AddMember addMember, JDialog owner)
 	{
 		this.addMember = addMember;
@@ -26,7 +27,7 @@ public class SubmitMemberButtonHandler implements ActionListener {
 	{
 		if(e.getActionCommand().equalsIgnoreCase("Add Family Head"))
 		{
-			if(addMember.txtAssignMemberID.getText().isEmpty() || 
+			if(		addMember.getTxtAssignMemberID().getText().isEmpty() || 
 					addMember.getTxtNameE().getText().isEmpty()||
 					addMember.getTxtNameM().getText().isEmpty() ||
 					addMember.getComboHeadStatus().getSelectedItem().toString().isEmpty() ||
@@ -41,7 +42,7 @@ public class SubmitMemberButtonHandler implements ActionListener {
 			else
 			{
 				SMember member = new SMember();
-				member.setMember_id(addMember.txtAssignMemberID.getText());
+				member.setMember_id(addMember.getTxtAssignMemberID().getText());
 				member.setM_name_e(addMember.getTxtNameE().getText());
 				member.setM_name_m(addMember.getTxtNameM().getText());
 				member.setFamily_head_status("Yes");
@@ -61,11 +62,8 @@ public class SubmitMemberButtonHandler implements ActionListener {
 		}
 		if(e.getActionCommand().equalsIgnoreCase("Add Member"))
 		{
-
-			//SMember member = (SMember) Test.main.get(addMember.txtAssignMemberID.getText());
-			
 			SMember member = new SMember();
-			member.setMember_id(addMember.txtAssignMemberID.getText());
+			member.setMember_id(addMember.getTxtAssignMemberID().getText());
 			member.setM_name_e(addMember.getTxtNameE().getText());
 			member.setM_name_m(addMember.getTxtNameM().getText());
 			member.setFamily_head_status("No");

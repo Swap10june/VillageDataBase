@@ -3,12 +3,21 @@ package util;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +29,55 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+/*import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
+
+
+
+
+
+
+
+
+
+
+
+//import jxl.Sheet;
+//import jxl.read.biff.BiffException;
 import beans.SFamily;
+import beans.SMSContacts;
 import beans.SMember;
 
 public class Utils 
@@ -210,6 +267,21 @@ public class Utils
 				}*/
 				return status;
 			}
+			if(table instanceof SMSContacts)
+			{
+				int status = 0;
+				Map<String,String> records = ((SMSContacts) table).getContacts();
+				for (Map.Entry<String, String> entry : records.entrySet())
+	        	{
+	        	    System.out.println(entry.getKey() + "/" + entry.getValue());
+	        	    PreparedStatement pStmtMember = DBConnection.getConnectionInstance().prepareStatement
+							("insert into SSMSContacts values(?,?)");
+					pStmtMember.setString(1, entry.getValue().toUpperCase());
+					pStmtMember.setString(2, entry.getKey());
+					status += pStmtMember.executeUpdate();
+	        	}
+			return status;	
+			}
 			
 		} catch (Exception e)
 		{
@@ -311,4 +383,183 @@ public class Utils
         }
         return mobileNoCollection;
     }
+	public ArrayList<String> getValueListForColumnName(String tableName,String colmnName)
+	{
+		try
+		{
+			ArrayList<String> list = new ArrayList<String>();
+			ResultSet set = querySELECT("select "+colmnName+" from "+tableName);
+			while(set.next())
+			{
+				list.add(set.getString(colmnName));
+			}
+			return list;
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public void inserRecordsFromFile(File selectedFile)
+	{
+		/*try {
+			String FilePath = selectedFile.getAbsolutePath();
+			FileInputStream fs = new FileInputStream(FilePath);
+			jxl.Workbook wb = jxl.Workbook.getWorkbook(fs);
+			
+			Sheet sh = wb.getSheet("Nov 2016");
+
+			// To get the number of rows present in sheet
+			int totalNoOfRows = sh.getRows();
+
+			// To get the number of columns present in sheet
+			int totalNoOfCols = sh.getColumns();
+
+			for (int row = 0; row < totalNoOfRows; row++)
+			{
+
+				for (int col = 0; col < totalNoOfCols; col++)
+				{
+					System.out.print(sh.getCell(col, row).getContents() + "\t");
+				}
+				System.out.println();
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BiffException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+	}
+	public String getFileExtension(File file)
+	{
+	    String name = file.getName();
+	    try
+	    {
+	        return name.substring(name.lastIndexOf(".") + 1);
+	    } catch (Exception e)
+	    {
+	        return "";
+	    }
+	}
+	public Vector inserRecordsFromFilePOI(File selectedFile) throws EncryptedDocumentException, InvalidFormatException
+	{
+		 /*Vector cellVectorHolder = new Vector();
+		try
+		{
+		    Workbook wb = WorkbookFactory.create(selectedFile);
+		    Sheet mySheet = wb.getSheetAt(0);
+		    Iterator<Row> rowIter = mySheet.rowIterator();
+		    System.out.println(mySheet.getRow(1).getCell(0));
+		    
+		    System.out.println(mySheet.getRow(1).getCell(0));
+	        while(rowIter.hasNext())
+	        {
+	            HSSFRow myRow = (HSSFRow) rowIter.next();
+	            Iterator cellIter = myRow.cellIterator();
+	            Vector cellStoreVector=new Vector();
+	            while(cellIter.hasNext())
+	            {
+	                HSSFCell myCell = (HSSFCell) cellIter.next();
+	                cellStoreVector.addElement(myCell);
+	            }
+	            cellVectorHolder.addElement(cellStoreVector);
+	        }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+		return cellVectorHolder;*/
+		return null;
+	}
+	public Map<String,String> inserRecordsFromFileJXL(File selectedFile)
+	{
+		Map<String,String> records = new HashMap<String, String>();
+		Workbook wrk1 = null;
+        try 
+        {
+                wrk1 = Workbook.getWorkbook(selectedFile);
+                Sheet sheet1 = wrk1.getSheet(0);
+                
+                int width = sheet1.getColumns();
+                int height = sheet1.getRows();
+                
+              //List<Cell> cells = new ArrayList<Cell>();
+                for(int j=0; j<height; j++)
+                {
+                   //Obtain reference to the Cell using getCell(int col, int row) method of sheet
+	                Cell nameColumn = sheet1.getCell(0, j);
+	                Cell numberColumn = sheet1.getCell(1, j);
+	                //Cell colArow3 = sheet1.getCell(2, j);
+	
+	                if(nameColumn.getContents().equalsIgnoreCase(""))
+	                continue;
+	                //Read the contents of the Cell using getContents() method, which will return
+	                //it as a String
+	                String strKey = numberColumn.getContents();
+	                String strValue = nameColumn.getContents();
+	                //System.out.println(row1);
+	                records.put(strKey, strValue);
+                }
+        }
+        catch (BiffException | IOException e)
+        {
+        	System.out.println();
+        }
+		return records;
+	}
+	public File generateTextFileToSendSMS(Map<String, String> records)
+	{
+		File objFile = null;
+		try 
+        {
+            objFile= new File("C:\\temp\\bulkSMSList.txt");
+            if(objFile.exists())
+                objFile.delete();
+            if(!objFile.exists())
+                objFile.createNewFile();
+            PrintWriter out = new PrintWriter(new FileOutputStream(objFile));
+            for (Map.Entry<String, String> entry : records.entrySet())
+        	{
+            	out.println(entry.getKey());
+        	    //System.out.println(entry.getKey() + "/" + entry.getValue());
+        	}
+            /*for (Object list1 : list)
+            {
+                //System.out.println(list1);
+                out.println(list1);
+                
+            }*/
+            out.flush();
+        } catch (IOException ex)
+		{
+        	ex.printStackTrace();
+        }
+		return objFile;
+	}
+	public int insertContactWithNumbersIntoDB(Map<String, String> records)
+	{
+		try
+		{
+			SMSContacts smsContacts = new SMSContacts(records);
+			return queryINSERT(smsContacts);
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

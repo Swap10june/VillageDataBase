@@ -150,7 +150,7 @@ public class AddFamily extends JDialog {
 		infoPanel.add(lblNameE);
 		
 		txtNameE.setBounds(110, 10, 200, 25);
-		utility.setComponenet(lblNameE,componenetMap);
+		utility.setComponenet(txtNameE,componenetMap);
 		infoPanel.add(txtNameE);
 		
 		JLabel lblNameM = new JLabel("Name(Mar.)");

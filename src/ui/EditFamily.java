@@ -29,153 +29,28 @@ public class EditFamily extends JDialog
 	/**
 	 * 
 	 */
-	private Utils utility = Utils.getUtilityInstance();
 	private static final long serialVersionUID = 1L;
-	//public JTextField txtSelectFamilyID = new JTextField();
-	private JTextField txtSelectFamilyID = new JTextField(500);
-	private List listOfHead = new List(1,true);
-	private List listOfMembers = new List();
-	private Map<String,JComponent> componenetMap = new HashMap<String,JComponent>();
 	
-	private JTextField txtNameM ;
-	private JLabel lblHeadStatus ;
-	private JLabel lblSexStatus ;
-	private JLabel lblStateStatus ;
-	private JLabel lblDistStatus ;
-	private JLabel lblTalStatus ;
-	private JLabel lblVillageStatus ;
-	private JLabel lblDobStatus ;
-	private JLabel lblContStatus ;
-	private JLabel lblWardStatus ;
-	private JTextField txtAssignMemberID = new JTextField();
-	private JTextField txtNameE ;
+	private Utils 					utility 			= 		Utils.getUtilityInstance();
+	private JTextField 				txtSelectFamilyID 	= 		new JTextField(500);
+	private List 					listOfHead 			= 		new List(1,true);
+	private List 					listOfMembers 		= 		new List();
+	private Map<String,JComponent> 	componenetMap 		= 		new HashMap<String,JComponent>();
 	
-	public JTextField getTxtSelectFamilyID() {
-		return txtSelectFamilyID;
-	}
-
-	public void setTxtSelectFamilyID(JTextField txtSelectFamilyID) {
-		this.txtSelectFamilyID = txtSelectFamilyID;
-	}
-
-	public List getListOfHead() {
-		return listOfHead;
-	}
-
-	public void setListOfHead(List listOfHead) {
-		this.listOfHead = listOfHead;
-	}
-
-	public List getListOfMembers() {
-		return listOfMembers;
-	}
-
-	public void setListOfMembers(List listOfMembers) {
-		this.listOfMembers = listOfMembers;
-	}
-
-	public Map<String, JComponent> getComponenetMap() {
-		return componenetMap;
-	}
-
-	public void setComponenetMap(Map<String, JComponent> componenetMap) {
-		this.componenetMap = componenetMap;
-	}
-	public JTextField getTxtNameE() {
-		return txtNameE;
-	}
-
-	public void setTxtNameE(JTextField txtNameE) {
-		this.txtNameE = txtNameE;
-	}
-
-	public JTextField getTxtNameM() {
-		return txtNameM;
-	}
-
-	public void setTxtNameM(JTextField txtNameM) {
-		this.txtNameM = txtNameM;
-	}
-
-	public JLabel getLblHeadStatus() {
-		return lblHeadStatus;
-	}
-
-	public void setLblHeadStatus(JLabel lblHeadStatus) {
-		this.lblHeadStatus = lblHeadStatus;
-	}
-
-	public JLabel getLblSexStatus() {
-		return lblSexStatus;
-	}
-
-	public void setLblSexStatus(JLabel lblSexStatus) {
-		this.lblSexStatus = lblSexStatus;
-	}
-
-	public JLabel getLblStateStatus() {
-		return lblStateStatus;
-	}
-
-	public void setLblStateStatus(JLabel lblStateStatus) {
-		this.lblStateStatus = lblStateStatus;
-	}
-
-	public JLabel getLblDistStatus() {
-		return lblDistStatus;
-	}
-
-	public void setLblDistStatus(JLabel lblDistStatus) {
-		this.lblDistStatus = lblDistStatus;
-	}
-
-	public JLabel getLblTalStatus() {
-		return lblTalStatus;
-	}
-
-	public void setLblTalStatus(JLabel lblTalStatus) {
-		this.lblTalStatus = lblTalStatus;
-	}
-
-	public JLabel getLblVillageStatus() {
-		return lblVillageStatus;
-	}
-
-	public void setLblVillageStatus(JLabel lblVillageStatus) {
-		this.lblVillageStatus = lblVillageStatus;
-	}
-
-	public JLabel getLblDobStatus() {
-		return lblDobStatus;
-	}
-
-	public void setLblDobStatus(JLabel lblDobStatus) {
-		this.lblDobStatus = lblDobStatus;
-	}
-
-	public JLabel getLblContStatus() {
-		return lblContStatus;
-	}
-
-	public void setLblContStatus(JLabel lblContStatus) {
-		this.lblContStatus = lblContStatus;
-	}
-
-	public JLabel getLblWardStatus() {
-		return lblWardStatus;
-	}
-
-	public void setLblWardStatus(JLabel lblWardStatus) {
-		this.lblWardStatus = lblWardStatus;
-	}
-
-	public JTextField getTxtAssignMemberID() {
-		return txtAssignMemberID;
-	}
-
-	public void setTxtAssignMemberID(JTextField txtAssignMemberID) {
-		this.txtAssignMemberID = txtAssignMemberID;
-	}
+	private JTextField 				txtNameM ;
+	private JLabel 					lblHeadStatus ;
+	private JLabel 					lblSexStatus ;
+	private JLabel 					lblStateStatus ;
+	private JLabel 					lblDistStatus ;
+	private JLabel 					lblTalStatus ;
+	private JLabel 					lblVillageStatus ;
+	private JLabel 					lblDobStatus ;
+	private JLabel 					lblContStatus ;
+	private JLabel 					lblWardStatus ;
+	private JTextField 				txtAssignMemberID 	= 		new JTextField();
+	private JTextField 				txtNameE ;
+	
+	
 	
 	
 	public EditFamily(JDialog owner)
@@ -416,6 +291,132 @@ public class EditFamily extends JDialog
 		{
 			entry.getValue().setVisible(false);
 		}
+	}
+	public JTextField getTxtSelectFamilyID() {
+		return txtSelectFamilyID;
+	}
+
+	public void setTxtSelectFamilyID(JTextField txtSelectFamilyID) {
+		this.txtSelectFamilyID = txtSelectFamilyID;
+	}
+
+	public List getListOfHead() {
+		return listOfHead;
+	}
+
+	public void setListOfHead(List listOfHead) {
+		this.listOfHead = listOfHead;
+	}
+
+	public List getListOfMembers() {
+		return listOfMembers;
+	}
+
+	public void setListOfMembers(List listOfMembers) {
+		this.listOfMembers = listOfMembers;
+	}
+
+	public Map<String, JComponent> getComponenetMap() {
+		return componenetMap;
+	}
+
+	public void setComponenetMap(Map<String, JComponent> componenetMap) {
+		this.componenetMap = componenetMap;
+	}
+	public JTextField getTxtNameE() {
+		return txtNameE;
+	}
+
+	public void setTxtNameE(JTextField txtNameE) {
+		this.txtNameE = txtNameE;
+	}
+
+	public JTextField getTxtNameM() {
+		return txtNameM;
+	}
+
+	public void setTxtNameM(JTextField txtNameM) {
+		this.txtNameM = txtNameM;
+	}
+
+	public JLabel getLblHeadStatus() {
+		return lblHeadStatus;
+	}
+
+	public void setLblHeadStatus(JLabel lblHeadStatus) {
+		this.lblHeadStatus = lblHeadStatus;
+	}
+
+	public JLabel getLblSexStatus() {
+		return lblSexStatus;
+	}
+
+	public void setLblSexStatus(JLabel lblSexStatus) {
+		this.lblSexStatus = lblSexStatus;
+	}
+
+	public JLabel getLblStateStatus() {
+		return lblStateStatus;
+	}
+
+	public void setLblStateStatus(JLabel lblStateStatus) {
+		this.lblStateStatus = lblStateStatus;
+	}
+
+	public JLabel getLblDistStatus() {
+		return lblDistStatus;
+	}
+
+	public void setLblDistStatus(JLabel lblDistStatus) {
+		this.lblDistStatus = lblDistStatus;
+	}
+
+	public JLabel getLblTalStatus() {
+		return lblTalStatus;
+	}
+
+	public void setLblTalStatus(JLabel lblTalStatus) {
+		this.lblTalStatus = lblTalStatus;
+	}
+
+	public JLabel getLblVillageStatus() {
+		return lblVillageStatus;
+	}
+
+	public void setLblVillageStatus(JLabel lblVillageStatus) {
+		this.lblVillageStatus = lblVillageStatus;
+	}
+
+	public JLabel getLblDobStatus() {
+		return lblDobStatus;
+	}
+
+	public void setLblDobStatus(JLabel lblDobStatus) {
+		this.lblDobStatus = lblDobStatus;
+	}
+
+	public JLabel getLblContStatus() {
+		return lblContStatus;
+	}
+
+	public void setLblContStatus(JLabel lblContStatus) {
+		this.lblContStatus = lblContStatus;
+	}
+
+	public JLabel getLblWardStatus() {
+		return lblWardStatus;
+	}
+
+	public void setLblWardStatus(JLabel lblWardStatus) {
+		this.lblWardStatus = lblWardStatus;
+	}
+
+	public JTextField getTxtAssignMemberID() {
+		return txtAssignMemberID;
+	}
+
+	public void setTxtAssignMemberID(JTextField txtAssignMemberID) {
+		this.txtAssignMemberID = txtAssignMemberID;
 	}
 
 }
