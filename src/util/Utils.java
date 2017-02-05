@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -55,6 +52,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;*/
 
 
 
+
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -62,6 +60,7 @@ import jxl.read.biff.BiffException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
 
 
 
@@ -447,7 +446,7 @@ public class Utils
 	        return "";
 	    }
 	}
-	public Vector inserRecordsFromFilePOI(File selectedFile) throws EncryptedDocumentException, InvalidFormatException
+	public Vector<?> inserRecordsFromFilePOI(File selectedFile) throws EncryptedDocumentException, InvalidFormatException
 	{
 		 /*Vector cellVectorHolder = new Vector();
 		try
@@ -490,7 +489,7 @@ public class Utils
                 wrk1 = Workbook.getWorkbook(selectedFile);
                 Sheet sheet1 = wrk1.getSheet(0);
                 
-                int width = sheet1.getColumns();
+               // int width = sheet1.getColumns();
                 int height = sheet1.getRows();
                 
               //List<Cell> cells = new ArrayList<Cell>();
@@ -527,7 +526,8 @@ public class Utils
                 objFile.delete();
             if(!objFile.exists())
                 objFile.createNewFile();
-            PrintWriter out = new PrintWriter(new FileOutputStream(objFile));
+            @SuppressWarnings("resource")
+			PrintWriter out = new PrintWriter(new FileOutputStream(objFile));
             for (Map.Entry<String, String> entry : records.entrySet())
         	{
             	out.println(entry.getKey());

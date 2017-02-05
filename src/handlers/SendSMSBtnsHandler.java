@@ -116,7 +116,8 @@ public class SendSMSBtnsHandler implements ActionListener {
 	            {
 	                try
 	                {
-	                	File textFile =Utils.getUtilityInstance().generateTextFileToSendSMS(records);
+	                	@SuppressWarnings("unused")
+						File textFile =Utils.getUtilityInstance().generateTextFileToSendSMS(records);
 	                	JOptionPane.showMessageDialog(null, "Click OK and wait for website to Open..Please select latest text file from \"C:\\Temp\" folder!");
 	                	parent.dispose();
 	                    Desktop desktop = Desktop.getDesktop();
