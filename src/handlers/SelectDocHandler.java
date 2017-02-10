@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 
 import beans.SMember;
-import src.Test;
+import src.Login;
 import ui.AddDocuments;
 import ui.AddFamily;
 
@@ -45,7 +45,7 @@ public class SelectDocHandler implements ActionListener {
 			
 			SMember member = new SMember();
 			member.setMember_id(memberID);
-			Test.main.put(memberID, member);
+			Login.main.put(memberID, member);
 			
 		}
 	}

@@ -27,47 +27,48 @@ public class EditFamilyButtonHandler implements ActionListener
 		{
 				if(arg0.getActionCommand().equalsIgnoreCase("Select"))
 				{
+					editFamily.getListOfHead().removeAll();
+					editFamily.getListOfMembers().removeAll();
+					String []array = textString.split(":");
+					//int family_id = Integer.parseInt(array[2]);
 				
-				String []array = textString.split(":");
-				//int family_id = Integer.parseInt(array[2]);
-				
-				try
-				{
-					String head = null;
-					ResultSet set =Utils.getUtilityInstance().querySELECT("Select family_head from SFAMILY where family_id="+array[2]);
-					while(set.next())
-		            {
-						if(editFamily.getListOfHead().getItemCount() == 0)
-						{
-							editFamily.getListOfHead().setVisible(true);
-							editFamily.getListOfHead().add(set.getString("family_head"));
-							head = set.getString("family_head");
-						}
-		            }
-					set =Utils.getUtilityInstance().querySELECT("Select * from SMember where family_id="+array[2]);
-					while(set.next())
-		            {
-						editFamily.getListOfMembers().setVisible(true);
-						if(!set.getString("M_NAME_E").equalsIgnoreCase(head))
-							editFamily.getListOfMembers().add(set.getString("m_name_e"));
-						editFamily.getListOfMembers().setEnabled(true);
-		            }
-					
-				} catch (ClassNotFoundException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					try
+					{
+						String head = null;
+						ResultSet set =Utils.getUtilityInstance().querySELECT("Select family_head from SFAMILY where family_id="+array[2]);
+						while(set.next())
+			            {
+							if(editFamily.getListOfHead().getItemCount() == 0)
+							{
+								editFamily.getListOfHead().setVisible(true);
+								editFamily.getListOfHead().add(set.getString("family_head"));
+								head = set.getString("family_head");
+							}
+			            }
+						set =Utils.getUtilityInstance().querySELECT("Select * from SMember where family_id="+array[2]);
+						while(set.next())
+			            {
+							editFamily.getListOfMembers().setVisible(true);
+							if(!set.getString("M_NAME_E").equalsIgnoreCase(head))
+								editFamily.getListOfMembers().add(set.getString("m_name_e"));
+							editFamily.getListOfMembers().setEnabled(true);
+			            }
+						
+					} catch (ClassNotFoundException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SQLException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Please Select Member first......");
+			}
 		}
-		else
-		{
-			JOptionPane.showMessageDialog(null, "Please Select Member first......");
-		}
-	}
 
 }

@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import beans.SFamily;
 import beans.SMember;
 import ui.AddFamily;
+import util.UpdateModelXML;
 import util.Utils;
 
 public class SubmitFamilyButtonHandler implements ActionListener {
@@ -39,6 +40,7 @@ public class SubmitFamilyButtonHandler implements ActionListener {
 				{
 					memberCount += Utils.getUtilityInstance().queryINSERT(members.get(i));
 				}
+				new UpdateModelXML(family);
 				if(members.size()==memberCount)
 				{
 					JOptionPane.showMessageDialog (parent, memberCount+" Members Added in family ID :"+family.getFamilyId().split("-")[1], "Success", JOptionPane.INFORMATION_MESSAGE);

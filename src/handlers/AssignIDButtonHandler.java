@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 
 import beans.SFamily;
 import beans.SMember;
-import src.Test;
+import src.Login;
 import ui.AddFamily;
 import ui.AddMember;
 import util.Utils;
@@ -41,7 +41,7 @@ public class AssignIDButtonHandler implements ActionListener {
 			btn.setEnabled(false);
 			
 			SFamily family = new SFamily(familyID);
-			Test.main.put(familyID, family);
+			Login.main.put(familyID, family);
 		}
 		// member id
 		if(e.getActionCommand().equalsIgnoreCase("Assign"))
@@ -51,7 +51,7 @@ public class AssignIDButtonHandler implements ActionListener {
 			
 			SMember member = new SMember();
 			member.setMember_id(memberID);
-			Test.main.put(memberID, member);
+			Login.main.put(memberID, member);
 			
 		}
 	}

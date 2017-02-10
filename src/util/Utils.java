@@ -14,7 +14,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,23 +52,18 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;*/
 
 
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-
-
-
-
-
-
-
-
-
-
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 
 
@@ -82,6 +76,10 @@ import beans.SMember;
 public class Utils 
 {
 	private static Utils s_utils=null;
+	
+	private static final String HTML = "<html>";
+    private static final String HTML_END = "</html>";
+    
     private Utils()
     {
     	
@@ -446,40 +444,7 @@ public class Utils
 	        return "";
 	    }
 	}
-	public Vector<?> inserRecordsFromFilePOI(File selectedFile) throws EncryptedDocumentException, InvalidFormatException
-	{
-		 /*Vector cellVectorHolder = new Vector();
-		try
-		{
-		    Workbook wb = WorkbookFactory.create(selectedFile);
-		    Sheet mySheet = wb.getSheetAt(0);
-		    Iterator<Row> rowIter = mySheet.rowIterator();
-		    System.out.println(mySheet.getRow(1).getCell(0));
-		    
-		    System.out.println(mySheet.getRow(1).getCell(0));
-	        while(rowIter.hasNext())
-	        {
-	            HSSFRow myRow = (HSSFRow) rowIter.next();
-	            Iterator cellIter = myRow.cellIterator();
-	            Vector cellStoreVector=new Vector();
-	            while(cellIter.hasNext())
-	            {
-	                HSSFCell myCell = (HSSFCell) cellIter.next();
-	                cellStoreVector.addElement(myCell);
-	            }
-	            cellVectorHolder.addElement(cellStoreVector);
-	        }
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-
-		return cellVectorHolder;*/
-		return null;
-	}
+	
 	public Map<String,String> inserRecordsFromFileJXL(File selectedFile)
 	{
 		Map<String,String> records = new HashMap<String, String>();
@@ -562,4 +527,46 @@ public class Utils
 		}
 		return 0;
 	}
+	public String htmlIfy(String s)
+    {
+        return HTML.concat(s).concat(HTML_END);
+    }
+	public String ReadTag(String tagName, String file) {
+
+	    try 
+	    {
+
+		File fXmlFile = new File(file);
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(fXmlFile);
+
+		
+		doc.getDocumentElement().normalize();
+
+		//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+		NodeList nList = doc.getElementsByTagName("user");
+
+		//System.out.println("----------------------------");
+
+		for (int temp = 0; temp < nList.getLength(); temp++)
+	        {
+
+			Node nNode = nList.item(temp);
+
+			//System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+			if (nNode.getNodeType() == Node.ELEMENT_NODE)
+	        {
+
+				Element eElement = (Element) nNode;
+				return eElement.getElementsByTagName(tagName).item(0).getTextContent();
+			}
+		}
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
+	        return null;
+	  }
 }

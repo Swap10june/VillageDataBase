@@ -8,7 +8,6 @@ public class SFamily
 {
 	private String familyId;
 	private List<SMember> members = new ArrayList<>();
-	
 	public SFamily(String familyId)
 	{
 		this.familyId= familyId;

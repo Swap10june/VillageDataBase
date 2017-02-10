@@ -3,8 +3,7 @@ package ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
-
+import java.util.HashSet;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -18,7 +17,8 @@ import handlers.SubmitMemberButtonHandler;
 import util.AutoSuggestor;
 import util.Utils;
 
-public class AddMember extends JDialog {
+public class AddMember extends JDialog
+{
 
 	/**
 	 * 
@@ -40,6 +40,10 @@ public class AddMember extends JDialog {
 	private JTextField 			txtContStatus;
 	private JTextField 			txtWardStatus;
 	private JTextField 			txtAssignMemberID;
+	private ArrayList<String> 	listOfTal		=	new ArrayList<String>();
+	private HashSet<String>		setGaon			=	new HashSet<String>();
+	private HashSet<String>		setTal			=	new HashSet<String>();
+	private ArrayList<String> 	listOfGaon		=	new ArrayList<String>();
 	
 	public AddMember(JDialog owner, String string)
 	{
@@ -133,11 +137,14 @@ public class AddMember extends JDialog {
 
 		        //create list for dictionary this in your case might be done via calling a method which queries db and returns results as arraylist
 		        ArrayList<String> words = new ArrayList<>();
-
+		        if(setTal.size()==0)
+		        {
+		        	words = Utils.getUtilityInstance().getValueListForColumnName("SMember","m_tal");
+		        	setTal.addAll(words);
+		        	listOfTal.addAll(setTal);
+		        }
 		        
-		        words = Utils.getUtilityInstance().getValueListForColumnName("SMember","m_tal");
-		        ArrayList<String> list = new ArrayList<String>(new LinkedHashSet<String>(words));
-		        setDictionary(list);
+		        setDictionary(listOfTal);
 		        //addToDictionary("bye");//adds a single word
 
 		        return super.wordTyped(typedWord);//now call super to check for any matches against newest dictionary
@@ -159,10 +166,13 @@ public class AddMember extends JDialog {
 		        //create list for dictionary this in your case might be done via calling a method which queries db and returns results as arraylist
 		        ArrayList<String> words = new ArrayList<>();
 
-		        
-		        words = Utils.getUtilityInstance().getValueListForColumnName("SMember","m_gaon");
-		        ArrayList<String> list = new ArrayList<String>(new LinkedHashSet<String>(words));
-		        setDictionary(list);
+		        if(setGaon.size()==0)
+		        {
+		        	words = Utils.getUtilityInstance().getValueListForColumnName("SMember","m_gaon");
+		        	setGaon.addAll(words);
+		        	listOfGaon.addAll(setGaon);
+		        }
+		        setDictionary(listOfGaon);
 		        //addToDictionary("bye");//adds a single word
 
 		        return super.wordTyped(typedWord);//now call super to check for any matches against newest dictionary

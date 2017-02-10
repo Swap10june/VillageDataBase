@@ -23,19 +23,21 @@ public class EditFamilyListHandler implements ItemListener {
 	@Override
 	public void itemStateChanged(ItemEvent arg0)
 	{
-		
-		try {
-			String selectedItem = ((java.awt.List) arg0.getSource()).getSelectedItem().toString();
-			ResultSet set =Utils.getUtilityInstance().querySELECT("select * from SMember where m_name_e='"+selectedItem+"'");
-			SMember member = SMember.createMemberFromDBInstance(set);
-			
-			populateMemberInfo(member);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(((java.awt.List) arg0.getSource()).getSelectedItem()!=null)
+		{
+			try {
+				String selectedItem = ((java.awt.List) arg0.getSource()).getSelectedItem().toString();
+				ResultSet set =Utils.getUtilityInstance().querySELECT("select * from SMember where m_name_e='"+selectedItem+"'");
+				SMember member = SMember.createMemberFromDBInstance(set);
+				
+				populateMemberInfo(member);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	private void populateMemberInfo(SMember member)
