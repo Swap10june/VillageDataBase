@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Map;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -31,11 +32,11 @@ public class InsertRecords extends JDialog
 	private JTextField 			txtSelectFile 		= 	new JTextField();
 	private JButton 			btnInsert 			= 	new JButton("Insert");
 	
-	public InsertRecords(JDialog owner)
+	public InsertRecords(JDialog owner, String insertRecordsString)
 	{
 		super(owner);
 		this.parent = owner;
-		Utils.getUtilityInstance().applyBasicSettingsOnWindow(parent,"Insert Records");
+		Utils.getUtilityInstance().applyBasicSettingsOnWindow(parent,insertRecordsString);
 		initUI();
 		parent.setVisible(true);
 	}
@@ -85,13 +86,10 @@ public class InsertRecords extends JDialog
 				String fileExtension = Utils.getUtilityInstance().getFileExtension(selectedFile);
 		        if(fileExtension.equalsIgnoreCase("xls") || fileExtension.equalsIgnoreCase("xlsx"))
 		        {
-		        	Map<String,String> records = Utils.getUtilityInstance().inserRecordsFromFileJXL(selectedFile);
-		        	int noOfresults = Utils.getUtilityInstance().insertContactWithNumbersIntoDB(records);
+		        	Map<String,Map<String,String>> records = Utils.getUtilityInstance().inserRecordsFromXLFile(selectedFile);
+		        	int noOfresults = Utils.getUtilityInstance().insertRecordsFromExcel(records);
 		        	JOptionPane.showMessageDialog(parent, noOfresults+" Records Inserted Successfully");
-		        	/*for (Map.Entry<String, String> entry : records.entrySet())
-		        	{
-		        	    System.out.println(entry.getKey() + "/" + entry.getValue());
-		        	}*/
+		        	parent.dispose();
 		        }
 		        else
 		        {

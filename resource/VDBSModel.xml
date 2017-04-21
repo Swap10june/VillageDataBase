@@ -1,3 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Familys>
+<Family FUid="1">
+<Member DOB="Jan 25, 1995" Dist="Ahmednagar" Gaon="Babhulwade" MUid="1" Sex="Female" State="Maharashtra" Tal="Parner" Ward="1" eName="Swati Jagadale" headStatus="no" mName="svaatI jagadaLo" mNo="8552060297"/>
+</Family>
+<Family FUid="2">
+<Member DOB="Jun 10, 1995" Dist="Ahmednagar" Gaon="Babhulwade" MUid="2" Sex="Male" State="Maharashtra" Tal="Parner" Ward="1" eName="Swapnil jagadale" headStatus="Yes" mName="svaipnala jagadaLo" mNo="9665929145"/>
+</Family>
+<Family FUid="3">
+<Member DOB="s" Dist="Ahmednagar" Gaon="s" MUid="3" Sex="Male" State="Maharashtra" Tal="s" Ward="7" eName="s" headStatus="Yes" mName="s" mNo="s"/>
+<Member DOB="l" Dist="Ahmednagar" Gaon="l" MUid="4" Sex="Male" State="Maharashtra" Tal="l" Ward="9" eName="l" headStatus="No" mName="l" mNo="l"/>
+<Member DOB="k" Dist="Ahmednagar" Gaon="k" MUid="5" Sex="Male" State="Maharashtra" Tal="k" Ward="6" eName="k" headStatus="No" mName="k" mNo="k"/>
+<Member DOB="m" Dist="Ahmednagar" Gaon="m" MUid="6" Sex="Male" State="Maharashtra" Tal="m" Ward="6" eName="m" headStatus="No" mName="m" mNo="m"/>
+</Family>
+<Family FUid="4">
+<Member DOB="s" Dist="Ahmednagar" Gaon="s" MUid="7" Sex="Male" State="Maharashtra" Tal="s" Ward="7" eName="s" headStatus="Yes" mName="s" mNo="s"/>
+<Member DOB="l" Dist="Ahmednagar" Gaon="l" MUid="8" Sex="Male" State="Maharashtra" Tal="l" Ward="9" eName="l" headStatus="No" mName="l" mNo="l"/>
+<Member DOB="k" Dist="Ahmednagar" Gaon="k" MUid="9" Sex="Male" State="Maharashtra" Tal="k" Ward="6" eName="k" headStatus="No" mName="k" mNo="k"/>
+<Member DOB="m" Dist="Ahmednagar" Gaon="m" MUid="10" Sex="Male" State="Maharashtra" Tal="m" Ward="6" eName="m" headStatus="No" mName="m" mNo="m"/>
+<Member DOB="j" Dist="Ahmednagar" Gaon="j" MUid="11" Sex="Male" State="Maharashtra" Tal="j" Ward="8" eName="j" headStatus="Yes" mName="j" mNo="j"/>
+<Member DOB="f" Dist="Ahmednagar" Gaon="f" MUid="12" Sex="Female" State="Maharashtra" Tal="f" Ward="5" eName="f" headStatus="No" mName="f" mNo="f"/>
+</Family>
 </Familys>

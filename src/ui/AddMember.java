@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -11,10 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import model.VDBSModel;
 import beans.SMember;
 import handlers.AssignIDButtonHandler;
 import handlers.SubmitMemberButtonHandler;
 import util.AutoSuggestor;
+import util.UConstants;
 import util.Utils;
 
 public class AddMember extends JDialog
@@ -40,11 +44,6 @@ public class AddMember extends JDialog
 	private JTextField 			txtContStatus;
 	private JTextField 			txtWardStatus;
 	private JTextField 			txtAssignMemberID;
-	private ArrayList<String> 	listOfTal		=	new ArrayList<String>();
-	private HashSet<String>		setGaon			=	new HashSet<String>();
-	private HashSet<String>		setTal			=	new HashSet<String>();
-	private ArrayList<String> 	listOfGaon		=	new ArrayList<String>();
-	
 	public AddMember(JDialog owner, String string)
 	{
 		super(owner);
@@ -109,7 +108,12 @@ public class AddMember extends JDialog
 		lblState.setBounds(110,150, 60, 25);
 		owner.add(lblState);
 		
-		comboStateStatus = new JComboBox<String>(new String[]{"Maharashtra","GOA"});
+		ArrayList<String> stateList = new VDBSModel().getAllStrings(UConstants.STATE_ATTR);
+		Set<String> distinct = new HashSet<>();
+        distinct.addAll(stateList);
+        stateList.clear();
+        stateList.addAll(distinct);
+		comboStateStatus = new JComboBox<String>(stateList.size()==0?new String[]{"Maharashtra","GOA"}:stateList.toArray(new String[stateList.size()]));
 		comboStateStatus.setBounds(170,150, 100, 25);
 		owner.add(comboStateStatus);
 		
@@ -118,7 +122,13 @@ public class AddMember extends JDialog
 		lblDist.setBounds(320,150, 60, 25);
 		owner.add(lblDist);
 		
-		comboDistStatus = new JComboBox<String>(new String[]{"Ahmednagar","Pune"});
+		ArrayList<String> distList = new VDBSModel().getAllStrings(UConstants.DIST_ATTR);
+		distinct.clear();
+		distinct = new HashSet<>();
+        distinct.addAll(distList);
+        distList.clear();
+        distList.addAll(distinct);
+		comboDistStatus = new JComboBox<String>(distList.size()==0?new String[]{"Ahmednagar","Pune"}:distList.toArray(new String[distList.size()]));
 		comboDistStatus.setBounds(370,150, 100, 25);
 		owner.add(comboDistStatus);
 		
@@ -137,14 +147,12 @@ public class AddMember extends JDialog
 
 		        //create list for dictionary this in your case might be done via calling a method which queries db and returns results as arraylist
 		        ArrayList<String> words = new ArrayList<>();
-		        if(setTal.size()==0)
-		        {
-		        	words = Utils.getUtilityInstance().getValueListForColumnName("SMember","m_tal");
-		        	setTal.addAll(words);
-		        	listOfTal.addAll(setTal);
-		        }
-		        
-		        setDictionary(listOfTal);
+		        words = new VDBSModel().getAllStrings(UConstants.TAL_ATTR);
+		        Set<String> distinct = new HashSet<>();
+		        distinct.addAll(words);
+		        words.clear();
+		        words.addAll(distinct);
+		        setDictionary(words);
 		        //addToDictionary("bye");//adds a single word
 
 		        return super.wordTyped(typedWord);//now call super to check for any matches against newest dictionary
@@ -165,14 +173,12 @@ public class AddMember extends JDialog
 
 		        //create list for dictionary this in your case might be done via calling a method which queries db and returns results as arraylist
 		        ArrayList<String> words = new ArrayList<>();
-
-		        if(setGaon.size()==0)
-		        {
-		        	words = Utils.getUtilityInstance().getValueListForColumnName("SMember","m_gaon");
-		        	setGaon.addAll(words);
-		        	listOfGaon.addAll(setGaon);
-		        }
-		        setDictionary(listOfGaon);
+		        words = new VDBSModel().getAllStrings(UConstants.GAON_ATTR);
+		        Set<String> distinct = new HashSet<>();
+		        distinct.addAll(words);
+		        words.clear();
+		        words.addAll(distinct);
+		        setDictionary(words);
 		        //addToDictionary("bye");//adds a single word
 
 		        return super.wordTyped(typedWord);//now call super to check for any matches against newest dictionary

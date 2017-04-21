@@ -26,7 +26,9 @@ public class AddHeadButtonHandler implements ActionListener {
 			AddMember addMember = new AddMember(new javax.swing.JDialog(),e.getActionCommand()); 
 			if(addMember.getMember()!=null)
 			{
+				
 				addMember.getMember().setFamily_id(parent.getFamily().getFamilyId());
+				parent.getFamily().setFamilyHead(addMember.getMember().getM_name_e());
 				parent.getFamily().addMemberIntoFamily(addMember.getMember());
 				AddFamily.getListOfHead().setEnabled(true);
 			}
@@ -40,6 +42,7 @@ public class AddHeadButtonHandler implements ActionListener {
 			{
 				addMember.getMember().setFamily_id(parent.getFamily().getFamilyId());
 				parent.getFamily().addMemberIntoFamily(addMember.getMember());
+				//parent.getFamily().setFamilyHead(addMember.getMember().getM_name_e());
 				AddFamily.listOfMembers.setEnabled(true);
 			}
 			

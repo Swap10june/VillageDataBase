@@ -2,13 +2,10 @@ package handlers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
 
+import model.VDBSModel;
 import ui.EditFamily;
-import util.Utils;
 
 public class EditFamilyButtonHandler implements ActionListener
 {
@@ -29,12 +26,10 @@ public class EditFamilyButtonHandler implements ActionListener
 				{
 					editFamily.getListOfHead().removeAll();
 					editFamily.getListOfMembers().removeAll();
-					String []array = textString.split(":");
+					//String []array = textString.split(":");
 					//int family_id = Integer.parseInt(array[2]);
 				
-					try
-					{
-						String head = null;
+					/*String head = null;
 						ResultSet set =Utils.getUtilityInstance().querySELECT("Select family_head from SFAMILY where family_id="+array[2]);
 						while(set.next())
 			            {
@@ -47,23 +42,15 @@ public class EditFamilyButtonHandler implements ActionListener
 			            }
 						set =Utils.getUtilityInstance().querySELECT("Select * from SMember where family_id="+array[2]);
 						while(set.next())
-			            {
+			            {*/
 							editFamily.getListOfMembers().setVisible(true);
-							if(!set.getString("M_NAME_E").equalsIgnoreCase(head))
-								editFamily.getListOfMembers().add(set.getString("m_name_e"));
+							String memberName = new VDBSModel().getMemberByName(textString.trim()).getM_name_e();
+							if(!memberName.isEmpty())
+								editFamily.getListOfMembers().add(memberName);
+							else
+								JOptionPane.showMessageDialog(null, "Not Found");
 							editFamily.getListOfMembers().setEnabled(true);
-			            }
-						
-					} catch (ClassNotFoundException e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SQLException e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
-				}
 			}
 			else
 			{

@@ -2,21 +2,20 @@ package handlers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import beans.SFamily;
+import model.VDBSModel;
 import beans.SMember;
-import src.Login;
 import ui.AddFamily;
 import ui.AddMember;
-import util.Utils;
 
 public class AssignIDButtonHandler implements ActionListener {
 
 	private 	AddFamily 		addFamily;
 	private 	AddMember 		addMember;	
+	private 	VDBSModel 		model 		= new VDBSModel();
+	public static int mListSize = 0;
 	
 	public AssignIDButtonHandler(AddFamily addFamily,JDialog owner)
 	{
@@ -33,25 +32,32 @@ public class AssignIDButtonHandler implements ActionListener {
 		// family id
 		if(e.getActionCommand().equalsIgnoreCase("Assign "))
 		{
-			String familyID = "FID-"+Utils.getUtilityInstance().getMaxFamilyID();
+			if(model==null)
+			{
+				model = new VDBSModel();
+			}
+			String familyID = "FID-"+String.valueOf(model.getAllFamiliesUID().length+1);
 			addFamily.getTxtAssignFamilyID().setText(familyID);
 			addFamily.getLblAssignedFamilyID().setText(familyID);
 			AddFamily.getBtnAddFamilyHead().setEnabled(true);
 			JButton btn = (JButton) e.getSource();
 			btn.setEnabled(false);
-			
-			SFamily family = new SFamily(familyID);
-			Login.main.put(familyID, family);
 		}
 		// member id
 		if(e.getActionCommand().equalsIgnoreCase("Assign"))
 		{
-			String memberID = "MID-"+String.valueOf(AddFamily.family.getMembers().size()+1);
+			if(model==null)
+			{
+				model = new VDBSModel();
+			}
+			
+			String memberID = "MID-"+String.valueOf((mListSize + model.getAllMembersUID().length)+1);
+			mListSize++;
 			addMember.getTxtAssignMemberID().setText(memberID);
 			
 			SMember member = new SMember();
 			member.setMember_id(memberID);
-			Login.main.put(memberID, member);
+			//Login.main.put(memberID, member);
 			
 		}
 	}

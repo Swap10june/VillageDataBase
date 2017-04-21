@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +20,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
+import model.VDBSModel;
 import ui.SendSMS;
-import util.Props;
 import util.Utils;
 
 public class SendSMSBtnsHandler implements ActionListener {
@@ -52,6 +50,7 @@ public class SendSMSBtnsHandler implements ActionListener {
 						!sendSMS.getTextSurName().getText().isEmpty() ||
 						sendSMS.getComboSex().getSelectedIndex()!=0)
 				{
+					
 					JPanel panel = sendSMS.getMiddlePanel();
 					table = initTableUI(panel);
 			        panel.setVisible(true);
@@ -95,7 +94,7 @@ public class SendSMSBtnsHandler implements ActionListener {
 			{
 				model.setRowCount(0);
 				parent.dispose();
-				new SendSMS(new javax.swing.JDialog());
+				new SendSMS(new javax.swing.JDialog(),"Clear");
 				
 			}
 			break;
@@ -213,60 +212,27 @@ public class SendSMSBtnsHandler implements ActionListener {
 
 	private void setModelRowData(DefaultTableModel model)
 	{
-		try
-		{
-			String query = "select * from SMember where ";
-			if(Props.queryTemp==null)
-			{
+		VDBSModel dtaModel = new VDBSModel();
+			Map<String,String> smsMap =  dtaModel.getSMSMapFor
+					(
+							sendSMS.getTextWard().getText().isEmpty()?null:sendSMS.getTextWard().getText(),
+							sendSMS.getTextSurName().getText().isEmpty()?null:sendSMS.getTextWard().getText(),
+							sendSMS.getComboSex().getSelectedIndex()==0?0:sendSMS.getComboSex().getSelectedIndex(),
+							sendSMS.getComboHeadStatus().getSelectedIndex()==0?0:sendSMS.getComboHeadStatus().getSelectedIndex()
+					);
+			
 				
-				if(!sendSMS.getTextWard().getText().isEmpty())
-					query =  query+" m_ward="+Integer.parseInt(sendSMS.getTextWard().getText());
-				if(!sendSMS.getTextSurName().getText().isEmpty())
-					query = query+" m_name_e LIKE '%"+sendSMS.getTextSurName().getText()+"%'";
-				if(sendSMS.getComboSex().getSelectedIndex()!=0 &&( !sendSMS.getTextWard().getText().isEmpty() ||!sendSMS.getTextSurName().getText().isEmpty()))
-					query = query+" and m_sex='"+sendSMS.getComboSex().getSelectedItem()+"'";
-				else if(sendSMS.getComboSex().getSelectedIndex()!=0)
-					query = query+" m_sex='"+sendSMS.getComboSex().getSelectedItem()+"'";
-				if(sendSMS.getComboHeadStatus().getSelectedIndex()!=0 &&( !sendSMS.getTextWard().getText().isEmpty() ||!sendSMS.getTextSurName().getText().isEmpty()))
-					query = query+" and family_head_status='"+sendSMS.getComboHeadStatus().getSelectedItem()+"'";
-				else if(sendSMS.getComboHeadStatus().getSelectedIndex()!=0)
-					query = query+" family_head_status='"+sendSMS.getComboHeadStatus().getSelectedItem()+"'";
-			}
-			else
-			{
-				query=Props.queryTemp;
-			}
-			ResultSet set;
-		
-			set = Utils.getUtilityInstance().querySELECT(query.toUpperCase());
-		
-			if(Props.queryTemp==null)
-			{
-				while(set.next())
-				{
-					model.addRow(new Object[]
-								{ 	set.getInt("member_id"), set.getString("m_name_e"),set.getString("m_contact"),false}
-								);
-				}
-			}
-			else
-			{
-				int num = 1;
-				while(set.next())
-				{
-					model.addRow(new Object[]
-								{ num++,set.getString("S_NAME"),set.getString("S_NUMBER"),false}
-								);
-		        }
-			}
-		
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			int num=1;
+		for(Map.Entry<String, String> entry:smsMap.entrySet())
+		{
+			model.addRow(new Object[]
+					{ num++,entry.getKey(),entry.getValue(),false}
+					);
 		}
+			
+		
+			
+		
 	}
 
 }

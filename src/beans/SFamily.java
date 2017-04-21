@@ -8,6 +8,8 @@ public class SFamily
 {
 	private String familyId;
 	private List<SMember> members = new ArrayList<>();
+	private String FamilyHead;
+	
 	public SFamily(String familyId)
 	{
 		this.familyId= familyId;
@@ -33,16 +35,6 @@ public class SFamily
 	}
 	
 	
-	public void display()
-	{
-		System.out.println("**************Members**************");
-		for (int i = 0; i < members.size(); i++)
-		{
-			System.out.println("Member id : "+members.get(i).getMember_id());
-			members.get(i).display();
-		}
-	}
-
 	public String getFamilyId() {
 		return familyId;
 	}
@@ -67,6 +59,18 @@ public class SFamily
 				member = members.get(i);
 		}
 		return member;
+	}
+	/**
+	 * @return the familyHead
+	 */
+	public String getFamilyHead() {
+		return FamilyHead;
+	}
+	/**
+	 * @param familyHead the familyHead to set
+	 */
+	public void setFamilyHead(String familyHead) {
+		FamilyHead = familyHead;
 	}
 }
 

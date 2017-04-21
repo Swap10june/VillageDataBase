@@ -59,10 +59,10 @@ public class AddFamily extends JDialog {
 	
 	
 	
-	public AddFamily(JDialog owner)
+	public AddFamily(JDialog owner, String addFamilyString)
 	{
 		super(owner);
-		utility.applyBasicSettingsOnWindow(owner,"Add Family");
+		utility.applyBasicSettingsOnWindow(owner,addFamilyString);
 		initUI(owner);
 		owner.setVisible(true);
 	}

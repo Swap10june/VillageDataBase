@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,10 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import beans.SFamily;
-import beans.SMember;
 import ui.Home;
-import util.UpdateModelXML;
 import util.Utils;
 
 public class Login extends JDialog
@@ -31,7 +25,7 @@ public class Login extends JDialog
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static Map<String,Object> main = new HashMap<>();
+	//public static Map<String,Object> main = new HashMap<>();
 	
 	
 	public Login(JDialog owner)
@@ -41,7 +35,7 @@ public class Login extends JDialog
 		initUI(owner);
 		owner.setVisible(true);
 	}
-	private void initUI(JDialog owner)
+	private void initUI(final JDialog owner)
 	{
 		// Image panel
 		 JPanel imagePanel = new JPanel();
@@ -63,9 +57,9 @@ public class Login extends JDialog
 		 lblUserName.setBounds(450, 100, 200, 30);
 		 
 		 //Text field for user name 
-		 JTextField  txtUserName = new JTextField(15);
+		 final JTextField  txtUserName = new JTextField(15);
 		 //Helper.setComponent(txtUserName, "txtUserName");
-         //txtUserName.setText("swap");
+         txtUserName.setText("swap");
 		 txtUserName.setBounds(480, 140, 300, 30);
 		 
 		 //Label for user name image icon
@@ -85,9 +79,9 @@ public class Login extends JDialog
 		 
 		 
 		 //Text field for password
-		 JPasswordField txtUserPass = new JPasswordField(15);
+		 final JPasswordField txtUserPass = new JPasswordField(15);
 		 //Helper.setComponent(txtUserPass, "txtUserPass");
-         //txtUserPass.setText("swap1");
+         txtUserPass.setText("swap");
 		 txtUserPass.setBounds(480, 240, 300, 30);
 		 
 		//Label for user password image icon
@@ -97,7 +91,7 @@ public class Login extends JDialog
 		 lblUserPassIcon.setBounds(790, 240, 40, 30);
 		 
 		 //Check box to show password
-		 JCheckBox passCheckBox = new JCheckBox("Show Password");
+		 final JCheckBox passCheckBox = new JCheckBox("Show Password");
 		 //Helper.setComponent(passCheckBox, "passCheckBox");
 		 passCheckBox.setBounds(750, 280, 300, 30);
 		 passCheckBox.addActionListener(new ActionListener()
@@ -123,37 +117,14 @@ public class Login extends JDialog
 		 btnLogin.addActionListener(new ActionListener()
                  {
 
-                        @Override
+                        @SuppressWarnings("deprecation")
+						@Override
                         public void actionPerformed(ActionEvent e)
                         {
                             if(txtUserName.getText().equalsIgnoreCase(Utils.getUtilityInstance().ReadTag("name", "resource/users.xml")) &&txtUserPass.getText().equalsIgnoreCase(Utils.getUtilityInstance().ReadTag("pw", "resource/users.xml")))
                             {
-                                /*//Helper.pullData();
-                                HomePageFrame objHome=new HomePageFrame();
-                                objHome.setVisible(true);
-                                dispose();*/
                             	new Home(new javax.swing.JDialog());
-                            	/*SFamily family = new SFamily("1234");
-                                SMember member = new SMember();
-                                member.setFamily_head_status("true");
-                                member.setM_contact("9922821145");
-                                member.setM_dist("A.Nagar");
-                                member.setM_dob("10/06/1991");
-                                member.setM_gaon("babahulwade");
-                                member.setM_name_e("Ganpat Nana Jagadale");
-                                member.setM_name_m("sdsdsdsdsd");
-                                member.setM_sex("M");
-                                member.setM_state("MH");
-                                member.setM_tal("Parner");
-                                member.setM_ward(1);
-                                member.setMember_id("01");
-                                
-                                family.addMemberIntoFamily(member);
-                                family.addMemberIntoFamily(new SMember());
-                                //addElementWithData(family);
-                            	ModifyXMLDOM abc = new ModifyXMLDOM(family);*/
-
-                                dispose();
+                              	owner.dispose();
                             }
                             else
                                 JOptionPane.showMessageDialog(null, "InValid Credentials...please try again");
@@ -178,19 +149,7 @@ public class Login extends JDialog
 		 
 		 
 		 JPanel loginBodyPanel = new JPanel();
-		 //Helper.setComponent(loginBodyPanel, "loginBodyPanel");
-		 
-		/* //Footer Label
-	   	 JLabel footerLabel = new JLabel("Developed and Maintained by: Unity Infotech (I) Pvt Ltd");
-	   	 //Helper.setComponent(footerLabel, "footerPanel");
-	   	 footerLabel.setBackground(Color.LIGHT_GRAY);
-	   	 footerLabel.setHorizontalTextPosition(JLabel.CENTER);
-	   	 footerLabel.setVerticalTextPosition(JLabel.CENTER);
-	   	 footerLabel.setHorizontalAlignment(JLabel.CENTER);
-	   	 footerLabel.setFont(new Font("Courier", Font.BOLD,20));
-	   	 footerLabel.setBounds(0, 450, 900, 50);*/
-   	 
-		 
+		
 	   	 loginBodyPanel.setLayout(null);
 	   	 loginBodyPanel.setBounds(0, 30, 894, 510);
 	   	 //loginBodyPanel.setBackground(Color.gray);
@@ -223,9 +182,8 @@ public class Login extends JDialog
 		} catch (Exception e) {
 		    // If Nimbus is not available, you can set the GUI to another look and feel.
 		}
-		//Login loginFrame = new Login();
+		
 		new Login(new javax.swing.JDialog());
-		//loginFrame.setVisible(true);
-		//new Home(new javax.swing.JDialog());
+		
 	}
 }

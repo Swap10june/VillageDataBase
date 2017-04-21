@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 import javax.swing.JComponent;
 import beans.SMember;
 import ui.AddFamily;
-import util.Props;
 
 public class AddFamilyListHandler implements ItemListener
 {
@@ -23,8 +22,7 @@ public class AddFamilyListHandler implements ItemListener
 	{
 		addFamily.btnAddMember.setEnabled(true);	
 		String selectedItem = ((java.awt.List) e.getSource()).getSelectedItem().toString();
-		String [] str = selectedItem.split(Props.STRING_SPLIT);
-		SMember member = addFamily.getFamily().getMember(str[0]);
+		SMember member = addFamily.getFamily().getMember(selectedItem.trim().split(":")[0]);
 		
 		populateMemberInfo(member);
 		addFamily.getBtnSubmitFamily().setEnabled(true);

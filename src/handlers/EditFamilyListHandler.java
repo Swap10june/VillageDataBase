@@ -2,15 +2,13 @@ package handlers;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Map.Entry;
 
 import javax.swing.JComponent;
 
+import model.VDBSModel;
 import beans.SMember;
 import ui.EditFamily;
-import util.Utils;
 
 public class EditFamilyListHandler implements ItemListener {
 
@@ -25,19 +23,10 @@ public class EditFamilyListHandler implements ItemListener {
 	{
 		if(((java.awt.List) arg0.getSource()).getSelectedItem()!=null)
 		{
-			try {
-				String selectedItem = ((java.awt.List) arg0.getSource()).getSelectedItem().toString();
-				ResultSet set =Utils.getUtilityInstance().querySELECT("select * from SMember where m_name_e='"+selectedItem+"'");
-				SMember member = SMember.createMemberFromDBInstance(set);
-				
+			String selectedItem = ((java.awt.List) arg0.getSource()).getSelectedItem().toString();
+			SMember member = new VDBSModel().getMemberByName(selectedItem.trim());
+			if(member!=null)
 				populateMemberInfo(member);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	private void populateMemberInfo(SMember member)

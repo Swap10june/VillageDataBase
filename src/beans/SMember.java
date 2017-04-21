@@ -23,7 +23,7 @@ public class SMember
 	private String m_dob;
 	private int m_ward;
 	private String m_contact;
-	private List<Document> documents = new ArrayList<>();
+	private List<SDocument> documents = new ArrayList<>();
 	
 	
 	
@@ -132,30 +132,20 @@ public class SMember
 		this.m_contact = m_contact;
 	}
 
-	public List<Document> getDocuments() {
+	public List<SDocument> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(List<Document> documents) {
+	public void setDocuments(List<SDocument> documents) {
 		this.documents = documents;
 	}
 
-	public void display()
-	{
-		System.out.println("**************Documents**************");
-		for (int i = 0; i < documents.size(); i++)
-		{
-			
-			//System.out.println("Document id : "+documents.get(i).getDocumentID());
-			documents.get(i).display();
-		}
-	}
 	
-	public void addDocumentForMember(Document document)
+	public void addDocumentForMember(SDocument document)
 	{
 		this.documents.add(document);
 	}
-	public void removeDocumentofMember(Document document)
+	public void removeDocumentofMember(SDocument document)
 	{
 		this.documents.remove(document);
 	}
@@ -163,7 +153,7 @@ public class SMember
 	{
 		this.documents.clear();
 	}
-	public void addMultipleDocuments(Document[] documents)
+	public void addMultipleDocuments(SDocument[] documents)
 	{
 		this.documents.addAll(Arrays.asList(documents));
 	}

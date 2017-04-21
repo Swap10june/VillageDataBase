@@ -10,6 +10,7 @@ import ui.AddFamily;
 import ui.EditFamily;
 import ui.InsertRecords;
 import ui.SendSMS;
+import util.UConstants;
 
 public class HomeButtonHandler implements ActionListener
 {
@@ -25,40 +26,35 @@ public class HomeButtonHandler implements ActionListener
 	{
 		switch (e.getActionCommand())
 		{
-			case "Add Family":
+			case UConstants.ADD_FAMILY_STRING:
 			{
-				new AddFamily(new javax.swing.JDialog());
+				AssignIDButtonHandler.mListSize =0;
+				new AddFamily(new javax.swing.JDialog(),UConstants.ADD_FAMILY_STRING);
 			}
 			
 			break;
-			case "Show Family":
+			case UConstants.EDIT_FAMILY_STRING:
 			{
-				
-			}
-			
-			break;
-			case "Edit Family":
-			{
-				new EditFamily(new javax.swing.JDialog());
+				new EditFamily(new javax.swing.JDialog(),UConstants.EDIT_FAMILY_STRING);
 			}
 			
 			break;
 			
-			case "Add Document":
+			case UConstants.ADD_DOCUMENT_STRING:
 			{
-				new AddDocuments(new javax.swing.JDialog());
+				new AddDocuments(new javax.swing.JDialog(),UConstants.ADD_DOCUMENT_STRING);
 			}
 			
 			break;
-			case "Send Bulk SMS":
+			case UConstants.SEND_BULK_SMS_STRING:
 			{
-				new SendSMS(new javax.swing.JDialog());
+				new SendSMS(new javax.swing.JDialog(),UConstants.SEND_BULK_SMS_STRING);
 			}
 			
 			break;
-			case "Insert Records":
+			case UConstants.INSERT_RECORDS_STRING:
 			{
-				new InsertRecords(new javax.swing.JDialog());
+				new InsertRecords(new javax.swing.JDialog(),UConstants.INSERT_RECORDS_STRING);
 			}
 			
 			break;

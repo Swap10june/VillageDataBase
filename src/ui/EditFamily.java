@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.List;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -21,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import model.VDBSModel;
 import util.AutoSuggestor;
 import util.Utils;
 
@@ -50,15 +50,10 @@ public class EditFamily extends JDialog
 	private JLabel 					lblWardStatus ;
 	private JTextField 				txtAssignMemberID 	= 		new JTextField();
 	private JTextField 				txtNameE ;
-	private  ArrayList<String> 		list				= 		null;
-	
-	
-	
-	
-	public EditFamily(JDialog owner)
+	public EditFamily(JDialog owner, String editFamilyString)
 	{
 		super(owner);
-		utility.applyBasicSettingsOnWindow(owner,"Edit Family");
+		utility.applyBasicSettingsOnWindow(owner,editFamilyString);
 		initUI(owner);
 		owner.setVisible(true);
 	}
@@ -116,16 +111,17 @@ public class EditFamily extends JDialog
 		        //create list for dictionary this in your case might be done via calling a method which queries db and returns results as arraylist
 		        ArrayList<String> words = new ArrayList<>();
 
-		        Map<String, String> columnNames = new HashMap<String,String>();
+		        /*Map<String, String> columnNames = new HashMap<String,String>();
 		        columnNames.put("family_id", "family_id");
 		        columnNames.put("family_head", "family_head");
 		        if(list==null)
 		        {
 		        	words = utility.queryMultiColumnSelect("SFamily",columnNames);
 			        list = new ArrayList<String>(new LinkedHashSet<String>(words));
-		        }
+		        }*/
 		        
-		        setDictionary(list);
+		        
+		        setDictionary(new VDBSModel().getAllFamilyHeadNames());
 		        //addToDictionary("bye");//adds a single word
 
 		        return super.wordTyped(typedWord);//now call super to check for any matches against newest dictionary

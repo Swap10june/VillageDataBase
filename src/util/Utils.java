@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +60,7 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import model.VDBSModel;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -67,6 +69,7 @@ import org.w3c.dom.NodeList;
 
 
 
+import dbutil.SQliteConnection;
 //import jxl.Sheet;
 //import jxl.read.biff.BiffException;
 import beans.SFamily;
@@ -178,7 +181,7 @@ public class Utils
 	  
         System.out.println("Select query fired: "+Query);
         ResultSet set=null;
-        Statement statement = DBConnection.getConnectionInstance().createStatement();
+        Statement statement = SQliteConnection.getSQliteConnection("vdbs.db").createStatement();
         set=statement.executeQuery(Query.toUpperCase());
         return set;     
 	
@@ -207,12 +210,12 @@ public class Utils
 		{
 			//String query;
 			
-			//PreparedStatement pStmtFamily = DBConnection.getConnectionInstance().prepareStatement("UPDATE EMPLOYEES SET SALARY = ? WHERE ID = ?");	
+			//PreparedStatement pStmtFamily = SQliteConnection.getSQliteConnection("vdbs.db").prepareStatement("UPDATE EMPLOYEES SET SALARY = ? WHERE ID = ?");	
 			if(table instanceof SFamily)
 			{
 				String familyId= ((SFamily) table).getFamilyId().split("-")[1];
 				
-				PreparedStatement pStmtFamily = DBConnection.getConnectionInstance().prepareStatement("insert into SFAMILY values(?,?)");
+				PreparedStatement pStmtFamily = SQliteConnection.getSQliteConnection("vdbs.db").prepareStatement("insert into SFAMILY values(?,?)");
 				pStmtFamily.setInt(1,Integer.parseInt(familyId));
 				pStmtFamily.setString(2,((SFamily) table).getMembers().get(0).getM_name_e().toUpperCase());
 				int status = pStmtFamily.executeUpdate();
@@ -233,7 +236,7 @@ public class Utils
 				String memberID= member.getMember_id().split("-")[1];
 				String FamilyID= member.getFamily_id().split("-")[1];
 				
-				PreparedStatement pStmtMember = DBConnection.getConnectionInstance().prepareStatement
+				PreparedStatement pStmtMember = SQliteConnection.getSQliteConnection("vdbs.db").prepareStatement
 						("insert into SMember values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
 				pStmtMember.setInt(1,Integer.parseInt(memberID));
 				pStmtMember.setInt(2,Integer.parseInt(FamilyID));
@@ -271,7 +274,7 @@ public class Utils
 				for (Map.Entry<String, String> entry : records.entrySet())
 	        	{
 	        	    System.out.println(entry.getKey() + "/" + entry.getValue());
-	        	    PreparedStatement pStmtMember = DBConnection.getConnectionInstance().prepareStatement
+	        	    PreparedStatement pStmtMember = SQliteConnection.getSQliteConnection("vdbs.db").prepareStatement
 							("insert into SSMSContacts values(?,?)");
 					pStmtMember.setString(1, entry.getValue().toUpperCase());
 					pStmtMember.setString(2, entry.getKey());
@@ -295,7 +298,7 @@ public class Utils
 		Statement statement;
 	        try 
 	        {
-				statement = DBConnection.getConnectionInstance().createStatement();
+				statement = SQliteConnection.getSQliteConnection("vdbs.db").createStatement();
 				statement.executeQuery(query.toUpperCase());
 				statement.close();
 			} catch (SQLException e) {
@@ -445,35 +448,55 @@ public class Utils
 	    }
 	}
 	
-	public Map<String,String> inserRecordsFromFileJXL(File selectedFile)
+	public Map<String,Map<String,String>> inserRecordsFromXLFile(File selectedFile)
 	{
-		Map<String,String> records = new HashMap<String, String>();
+		Map<String,Map<String,String>> records = new HashMap<String,Map<String,String>>();
 		Workbook wrk1 = null;
         try 
         {
-                wrk1 = Workbook.getWorkbook(selectedFile);
-                Sheet sheet1 = wrk1.getSheet(0);
-                
-               // int width = sheet1.getColumns();
-                int height = sheet1.getRows();
-                
-              //List<Cell> cells = new ArrayList<Cell>();
-                for(int j=0; j<height; j++)
-                {
-                   //Obtain reference to the Cell using getCell(int col, int row) method of sheet
-	                Cell nameColumn = sheet1.getCell(0, j);
-	                Cell numberColumn = sheet1.getCell(1, j);
-	                //Cell colArow3 = sheet1.getCell(2, j);
-	
-	                if(nameColumn.getContents().equalsIgnoreCase(""))
-	                continue;
-	                //Read the contents of the Cell using getContents() method, which will return
-	                //it as a String
-	                String strKey = numberColumn.getContents();
-	                String strValue = nameColumn.getContents();
-	                //System.out.println(row1);
-	                records.put(strKey, strValue);
-                }
+            wrk1 = Workbook.getWorkbook(selectedFile);
+            Sheet sheet1 = wrk1.getSheet(0);
+            
+           // int width = sheet1.getColumns();
+            int height = sheet1.getRows();
+            
+            Map<String,String> list = null;
+            for(int j=0; j<height; j++)
+            {
+            	list = new HashMap<>();
+               //Obtain reference to the Cell using getCell(int col, int row) method of sheet
+                Cell numberColumn = sheet1.getCell(0, j);
+                Cell familyHeadStatus = sheet1.getCell(1, j);
+                Cell marathiName = sheet1.getCell(2, j);
+                Cell sex = sheet1.getCell(3, j);
+                Cell state = sheet1.getCell(4, j);
+                Cell dist = sheet1.getCell(5, j);
+                Cell tal = sheet1.getCell(6, j);
+                Cell gaon = sheet1.getCell(7, j);
+                Cell dob = sheet1.getCell(8, j);
+                Cell engName = sheet1.getCell(9, j);
+                Cell ward = sheet1.getCell(10, j);
+
+                if(numberColumn.getContents().equalsIgnoreCase(""))
+                continue;
+                //Read the contents of the Cell using getContents() method, which will return
+                //it as a String
+                String strKey = numberColumn.getContents();
+                list.put(UConstants.MOBILE_NO_ATTR, strKey.isEmpty()?"-NV-":strKey);
+                list.put(UConstants.HEAD_STATUS_ATTR, familyHeadStatus.getContents().isEmpty()?"False":familyHeadStatus.getContents());
+                list.put(UConstants.MARATHI_NAME_ATTR, marathiName.getContents().isEmpty()?"-NV-":marathiName.getContents());
+                list.put(UConstants.SEX_STATUS_ATTR, sex.getContents().isEmpty()?"-NV-":sex.getContents());
+                list.put(UConstants.STATE_ATTR, state.getContents().isEmpty()?"-NV-":state.getContents());
+                list.put(UConstants.DIST_ATTR, dist.getContents().isEmpty()?"-NV-":dist.getContents());
+                list.put(UConstants.TAL_ATTR, tal.getContents().isEmpty()?"-NV-":tal.getContents());
+                list.put(UConstants.GAON_ATTR, gaon.getContents().isEmpty()?"-NV-":gaon.getContents());
+                list.put(UConstants.DOB_ATTR, dob.getContents().isEmpty()?"-NV-":dob.getContents());
+                list.put(UConstants.ENG_NAME_ATTR, engName.getContents().isEmpty()?"-NV-":engName.getContents());
+                list.put(UConstants.WARD_ATTR, ward.getContents().isEmpty()?"-NV-":ward.getContents());
+               
+                records.put(strKey, list);
+                //list.clear();
+            }
         }
         catch (BiffException | IOException e)
         {
@@ -511,21 +534,45 @@ public class Utils
         }
 		return objFile;
 	}
-	public int insertContactWithNumbersIntoDB(Map<String, String> records)
+	public int insertRecordsFromExcel(Map<String,Map<String,String>> records)
 	{
-		try
+		List<SFamily> familyList = new ArrayList<>();
+		int familyId= new VDBSModel().getAllFamiliesUID().length+1;
+		int memberId= new VDBSModel().getAllMembersUID().length+1;
+		for (Map.Entry<String,Map<String,String>> familyEntry:records.entrySet())
 		{
-			SMSContacts smsContacts = new SMSContacts(records);
-			return queryINSERT(smsContacts);
+			SFamily family = new SFamily();
+			SMember member = new SMember();
+			Map<String,String> memberInfo = familyEntry.getValue();
+			family.setFamilyId("FID-"+String.valueOf(familyId));
+			family.setFamilyHead(memberInfo.get(UConstants.ENG_NAME_ATTR));
+			member.setFamily_id("FID-"+String.valueOf(familyId));
+			familyId++;
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			member.setMember_id("MID-"+String.valueOf(memberId));
+			
+			memberId++;
+			
+			member.setM_contact(memberInfo.get(UConstants.MOBILE_NO_ATTR));
+			member.setFamily_head_status(memberInfo.get(UConstants.HEAD_STATUS_ATTR));
+			member.setM_name_m(memberInfo.get(UConstants.MARATHI_NAME_ATTR));
+			member.setM_sex(memberInfo.get(UConstants.SEX_STATUS_ATTR));
+			member.setM_state(memberInfo.get(UConstants.STATE_ATTR));
+			member.setM_dist(memberInfo.get(UConstants.DIST_ATTR));
+			member.setM_tal(memberInfo.get(UConstants.TAL_ATTR));
+			member.setM_gaon(memberInfo.get(UConstants.GAON_ATTR));
+			member.setM_dob(memberInfo.get(UConstants.DOB_ATTR));
+			member.setM_name_e(memberInfo.get(UConstants.ENG_NAME_ATTR));
+			member.setM_ward(Integer.parseInt(memberInfo.get(UConstants.WARD_ATTR)));
+			
+			family.addMemberIntoFamily(member);
+			familyList.add(family);
 		}
-		return 0;
+		//update datamodel
+		new VDBSModel().addFamily(familyList);
+		//update db
+		//new Dao().updateFamily(familyList);
+		return familyList.size();
 	}
 	public String htmlIfy(String s)
     {

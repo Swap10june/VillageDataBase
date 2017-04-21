@@ -2,17 +2,15 @@ package handlers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import model.VDBSModel;
 import beans.SFamily;
-import beans.SMember;
 import ui.AddFamily;
-import util.UpdateModelXML;
-import util.Utils;
 
 public class SubmitFamilyButtonHandler implements ActionListener {
 
@@ -28,33 +26,27 @@ public class SubmitFamilyButtonHandler implements ActionListener {
 	public void actionPerformed(ActionEvent e)
 	{
 		SFamily family = addFamily.getFamily();
-		List<SMember> members = family.getMembers();
-		
+		List<SFamily> familyList = null;
 		if(family!=null)
 		{
-			try
+			familyList = new ArrayList<SFamily>();
+			familyList.add(family);
+			/*Utils.getUtilityInstance().queryINSERT(family);
+			int memberCount=0;
+			for (int i = 0; i < members.size(); i++)
 			{
-				Utils.getUtilityInstance().queryINSERT(family);
-				int memberCount=0;
-				for (int i = 0; i < members.size(); i++)
-				{
-					memberCount += Utils.getUtilityInstance().queryINSERT(members.get(i));
-				}
-				new UpdateModelXML(family);
-				if(members.size()==memberCount)
-				{
-					JOptionPane.showMessageDialog (parent, memberCount+" Members Added in family ID :"+family.getFamilyId().split("-")[1], "Success", JOptionPane.INFORMATION_MESSAGE);
-					parent.dispose();
-				}
-			} catch (ClassNotFoundException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SQLException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				memberCount += Utils.getUtilityInstance().queryINSERT(members.get(i));
 			}
+			new UpdateModelXML(family);
+			if(members.size()==memberCount)
+			{
+				JOptionPane.showMessageDialog (parent, memberCount+" Members Added in family ID :"+family.getFamilyId().split("-")[1], "Success", JOptionPane.INFORMATION_MESSAGE);
+				parent.dispose();
+			}*/
+			new VDBSModel().addFamily(familyList);
+			//new Dao().updateFamily(familyList);
+			JOptionPane.showMessageDialog (parent, family.getMembers().size()+" Members Added in family ID :"+family.getFamilyId().split("-")[1], "Success", JOptionPane.INFORMATION_MESSAGE);
+			parent.dispose();
 		}
 		/*else
 		{

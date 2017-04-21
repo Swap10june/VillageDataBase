@@ -19,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import util.Props;
+import util.UConstants;
 import util.Utils;
 
 public class SendSMS extends JDialog
@@ -36,9 +36,9 @@ public class SendSMS extends JDialog
 	private JPanel 				footerPanel 	= new JPanel();	
 
 	private JTextField 			textWard 		= new JTextField();
-	private JComboBox<String> 	comboSex 		= new JComboBox<String>(Props.S_SEX_COMBO);
+	private JComboBox<String> 	comboSex 		= new JComboBox<String>(UConstants.S_SEX_COMBO);
 	private JTextField 			textSurName 	= new JTextField();
-	private JComboBox<String> 	comboHeadStatus = new JComboBox<String>(Props.S_HEAD_COMBO);
+	private JComboBox<String> 	comboHeadStatus = new JComboBox<String>(UConstants.S_HEAD_COMBO);
 	
 	private JButton 			btnSelectAll 	= new JButton("Select All");
 	private JButton 			BtnShow 		= new JButton("Show");
@@ -46,11 +46,11 @@ public class SendSMS extends JDialog
 	private JButton 			btnClearModel 	= new JButton("Clear");
 	private JButton 			btnSendSMS 		= new JButton("Send SMS");
 	
-	public SendSMS(JDialog owner)
+	public SendSMS(JDialog owner, String sendBulkSmsString)
 	{
 		super(owner);
 		this.parent = owner;
-		Utils.getUtilityInstance().applyBasicSettingsOnWindow(parent,"Send SMS");
+		Utils.getUtilityInstance().applyBasicSettingsOnWindow(parent,sendBulkSmsString);
 		initUI();
 		parent.setVisible(true);
 	}
