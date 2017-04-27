@@ -58,7 +58,7 @@ public class AddMember extends JDialog
 	{
 		JLabel lblNameE = new JLabel("Name(Eng.)");
 		lblNameE.setBounds(5,40, 100, 25);
-		lblNameE.setFont(new Font("Andalus", Font.BOLD,15));
+		lblNameE.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		owner.add(lblNameE);
 		
 		txtNameE = new JTextField(250);
@@ -66,21 +66,21 @@ public class AddMember extends JDialog
 		owner.add(txtNameE);
 		
 		JLabel lblNameM = new JLabel("Name(Mar.)");
-		lblNameM.setFont(new Font("Andalus", Font.BOLD,15));
+		lblNameM.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblNameM.setBounds(5,75, 100, 25);
 		owner.add(lblNameM);
 		
 		txtNameM = new JTextField(250);
-		txtNameM.setFont(new Font("Shivaji05", Font.BOLD,15));
+		txtNameM.setFont(UConstants.FONT_SHIVAJI_BOLD_15);
 		txtNameM.setBounds(110, 75, 200, 25);
 		owner.add(txtNameM);
 		
 		JLabel lblHead = new JLabel("Family Head");
-		lblHead.setFont(new Font("Andalus", Font.BOLD,15));
+		lblHead.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblHead.setBounds(350,40, 100, 25);
 		owner.add(lblHead);
 		
-		comboHeadStatus = new JComboBox<String>(new String[]{"Yes","No"});
+		comboHeadStatus = new JComboBox<String>(UConstants.ARRAY_COMBO_HEAD_STATUS);
 		comboHeadStatus.setBounds(460,40, 100, 25);
 		comboHeadStatus.setEnabled(true);
 		if(buttonString.equalsIgnoreCase("Add Member"))
@@ -90,21 +90,21 @@ public class AddMember extends JDialog
 		owner.add(comboHeadStatus);
 		
 		JLabel lblSex = new JLabel("Sex");
-		lblSex.setFont(new Font("Andalus", Font.BOLD,15));
+		lblSex.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblSex.setBounds(350,75, 100, 25);
 		owner.add(lblSex);
 		
-		comboSexStatus = new JComboBox<String>(new String[]{"Male","Female"});
+		comboSexStatus = new JComboBox<String>(UConstants.ARRAY_COMBO_SEX_STATUS);
 		comboSexStatus.setBounds(460,75, 100, 25);
 		owner.add(comboSexStatus);
 		
 		JLabel lblAddress = new JLabel("Enter Address Info");
-		lblAddress.setFont(new Font("Andalus", Font.ITALIC,15));
+		lblAddress.setFont(UConstants.FONT_ANDALUS_ITALIC_15);
 		lblAddress.setBounds(5,120, 150, 25);
 		owner.add(lblAddress);
 		
 		JLabel lblState = new JLabel("State");
-		lblState.setFont(new Font("Andalus", Font.BOLD,15));
+		lblState.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblState.setBounds(110,150, 60, 25);
 		owner.add(lblState);
 		
@@ -113,12 +113,12 @@ public class AddMember extends JDialog
         distinct.addAll(stateList);
         stateList.clear();
         stateList.addAll(distinct);
-		comboStateStatus = new JComboBox<String>(stateList.size()==0?new String[]{"Maharashtra","GOA"}:stateList.toArray(new String[stateList.size()]));
+		comboStateStatus = new JComboBox<String>(stateList.size()==0?UConstants.ARRAY_COMBO_STATE_LIST:stateList.toArray(new String[stateList.size()]));
 		comboStateStatus.setBounds(170,150, 100, 25);
 		owner.add(comboStateStatus);
 		
 		JLabel lblDist = new JLabel("Dist.");
-		lblDist.setFont(new Font("Andalus", Font.BOLD,15));
+		lblDist.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblDist.setBounds(320,150, 60, 25);
 		owner.add(lblDist);
 		
@@ -133,7 +133,7 @@ public class AddMember extends JDialog
 		owner.add(comboDistStatus);
 		
 		JLabel lblTal = new JLabel("Tal.");
-		lblTal.setFont(new Font("Andalus", Font.BOLD,15));
+		lblTal.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblTal.setBounds(110,190, 60, 25);
 		owner.add(lblTal);
 		
@@ -160,7 +160,7 @@ public class AddMember extends JDialog
 		};
 		
 		JLabel lblVillage = new JLabel("Gaon");
-		lblVillage.setFont(new Font("Andalus", Font.BOLD,15));
+		lblVillage.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblVillage.setBounds(320,190, 60, 25);
 		owner.add(lblVillage);
 		
@@ -188,12 +188,12 @@ public class AddMember extends JDialog
 		
 		
 		JLabel lblPersonalInfo = new JLabel("Enter Personal Info");
-		lblPersonalInfo.setFont(new Font("Andalus", Font.ITALIC,15));
+		lblPersonalInfo.setFont(UConstants.FONT_ANDALUS_ITALIC_15);
 		lblPersonalInfo.setBounds(5,220, 150, 25);
 		owner.add(lblPersonalInfo);
 		
 		JLabel lblDob = new JLabel("DOB");
-		lblDob.setFont(new Font("Andalus", Font.BOLD,15));
+		lblDob.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblDob.setBounds(110,250, 60, 25);
 		owner.add(lblDob);
 		
@@ -207,7 +207,7 @@ public class AddMember extends JDialog
 		owner.add(lblDobFormat);
 		
 		JLabel lblCont = new JLabel("Mob No.");
-		lblCont.setFont(new Font("Andalus", Font.BOLD,15));
+		lblCont.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblCont.setBounds(280,250, 60, 25);
 		owner.add(lblCont);
 		
@@ -216,7 +216,7 @@ public class AddMember extends JDialog
 		owner.add(txtContStatus);
 		
 		JLabel lblWard = new JLabel("Ward No.");
-		lblWard.setFont(new Font("Andalus", Font.BOLD,15));
+		lblWard.setFont(UConstants.FONT_ANDALUS_BOLD_15);
 		lblWard.setBounds(460,250, 100, 25);
 		owner.add(lblWard);
 		

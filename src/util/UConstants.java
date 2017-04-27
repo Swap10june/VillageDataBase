@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.Font;
+
 public class UConstants {
 
 	public static final String MOBILE_NO_ATTR = "mNo";
@@ -34,6 +36,12 @@ public class UConstants {
 	public static final String DOCUMENT_PATH_ATTR = "dPath";
 	public static final String DOCUMENT_NAME_ATTR = "dName";
 	public static final String[] DOCUMENT_NAME_LIST = {"AADHAR","Liscence","VOTING CARD"};
+	public static final Font FONT_SHIVAJI_BOLD_15 = new Font("Shivaji05", Font.BOLD,15);
+	public static final Font FONT_ANDALUS_BOLD_15 = new Font("Andalus", Font.BOLD,15);
+	public static final String[] ARRAY_COMBO_HEAD_STATUS = new String[]{"Yes","No"};
+	public static final String[] ARRAY_COMBO_SEX_STATUS = new String[]{"Male","Female"};
+	public static final Font FONT_ANDALUS_ITALIC_15 = new Font("Andalus", Font.ITALIC,15);
+	public static final String[] ARRAY_COMBO_STATE_LIST = new String[]{"Maharashtra","GOA"};
 	
 
 	
