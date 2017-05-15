@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,17 +20,20 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import model.VDBSModel;
 import ui.SendSMS;
 import util.Utils;
+import beans.SMember;
 
 public class SendSMSBtnsHandler implements ActionListener {
 
-	private SendSMS sendSMS;
-	private static JTable table = null;
-	private static DefaultTableModel model = null;
-	private JDialog parent;
+	private SendSMS 					sendSMS;
+	private static JTable 				table = null;
+	private static DefaultTableModel 	model = null;
+	private JDialog 					parent;
+	private VDBSModel					m_VDBSModel		= new VDBSModel();
 	
 	public SendSMSBtnsHandler(SendSMS sendSMS,JDialog owner)
 	{
@@ -44,12 +48,8 @@ public class SendSMSBtnsHandler implements ActionListener {
 		{
 			case "Show":
 			{
-				if(
-						!sendSMS.getTextWard().getText().isEmpty() || 
-						sendSMS.getComboHeadStatus().getSelectedIndex()!=0 ||
-						!sendSMS.getTextSurName().getText().isEmpty() ||
-						sendSMS.getComboSex().getSelectedIndex()!=0)
-				{
+				if(m_VDBSModel.getAllMembers().size()>0)
+						{
 					
 					JPanel panel = sendSMS.getMiddlePanel();
 					table = initTableUI(panel);
@@ -61,7 +61,7 @@ public class SendSMSBtnsHandler implements ActionListener {
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Please Select Some Criteria......");
+					JOptionPane.showMessageDialog(null, "No Members to show");
 				}
 			}
 				
@@ -70,7 +70,7 @@ public class SendSMSBtnsHandler implements ActionListener {
 			{
 				for (int i = 0; i <table.getRowCount(); i++)
 		           {
-		             model.setValueAt(true, i, 3);  
+		             model.setValueAt(true, i, 5);  
 
 		           }
 				sendSMS.getBtnSelectAll().setEnabled(false);
@@ -82,7 +82,7 @@ public class SendSMSBtnsHandler implements ActionListener {
 			{
 				for (int i = 0; i <table.getRowCount(); i++)
 		           {
-		             model.setValueAt(false, i, 3);  
+		             model.setValueAt(false, i, 5);  
 
 		           }
 				sendSMS.getBtnSelectAll().setEnabled(true);
@@ -98,6 +98,46 @@ public class SendSMSBtnsHandler implements ActionListener {
 				
 			}
 			break;
+			case "Create Sticker":
+			{/*
+				3int selectedRows=0;
+				Map<String,String> records = new HashMap<String,String>();
+	            for (int i = 0; i <model.getRowCount() ; i++)
+	            {
+	                //System.out.println(model.getValueAt(i, 0));
+	                if(model.getValueAt(i, 5).toString().equalsIgnoreCase("true"))
+	                {
+	                	records.put( model.getValueAt(i, 4).toString(),model.getValueAt(i, 3).toString());
+	                    selectedRows++;
+	                }
+	            }
+	            if(selectedRows!=0)
+	            {
+	                try
+	                {
+	                	@SuppressWarnings("unused")
+						File textFile =Utils.getUtilityInstance().generateTextFileToSendSMS(records);
+	                	JOptionPane.showMessageDialog(null, "Click OK and wait for website to Open..Please select latest text file from \"C:\\Temp\" folder!");
+	                	parent.dispose();
+	                    Desktop desktop = Desktop.getDesktop();
+	                    URI smsURL = new URI("http://sms.getincity.com");
+	                    desktop.browse(smsURL);
+	                } catch (IOException ex)
+	                {
+	                    //Logger.getLogger(CreateStickerFrame.class.getName()).log(Level.SEVERE, null, ex);
+	                } catch (URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	                
+	            }
+	            else
+	            {
+	                JOptionPane.showMessageDialog(null, "Please Select Records.....");
+	            }
+				
+			*/}
+			break;
 			case "Send SMS":
 			{
 				int selectedRows=0;
@@ -105,9 +145,9 @@ public class SendSMSBtnsHandler implements ActionListener {
 	            for (int i = 0; i <model.getRowCount() ; i++)
 	            {
 	                //System.out.println(model.getValueAt(i, 0));
-	                if(model.getValueAt(i, 3).toString().equalsIgnoreCase("true"))
+	                if(model.getValueAt(i, 5).toString().equalsIgnoreCase("true"))
 	                {
-	                	records.put( model.getValueAt(i, 2).toString(),model.getValueAt(i, 1).toString());
+	                	records.put( model.getValueAt(i, 4).toString(),model.getValueAt(i, 3).toString());
 	                    selectedRows++;
 	                }
 	            }
@@ -149,7 +189,7 @@ public class SendSMSBtnsHandler implements ActionListener {
 		//headers for the table
         String[] columns = new String[]
         		{
-            "Member ID","Member Name", "Mob No", "Select"
+            "Ward","Sex","Family Head","Member Name", "Mob No", "Select"
         };
         
         /*final Class[] columnClass = new Class[] {
@@ -167,7 +207,7 @@ public class SendSMSBtnsHandler implements ActionListener {
 			@Override
             public boolean isCellEditable(int row, int column)
             {
-            	if(column==3)
+            	if(column==5)
             		return true;
             	return false;
             }
@@ -176,13 +216,17 @@ public class SendSMSBtnsHandler implements ActionListener {
             public Class<?> getColumnClass(int columnIndex)
             {
             	switch (columnIndex) {
-				case 0:
+            	case 0:
 					return String.class;
-				case 1:
+            	case 1:
 					return String.class;
 				case 2:
 					return String.class;
 				case 3:
+					return String.class;
+				case 4:
+					return String.class;
+				case 5:
 					return Boolean.class;
 				}
 				return null;
@@ -202,36 +246,44 @@ public class SendSMSBtnsHandler implements ActionListener {
 			}
 		});
         setModelRowData(model);
+        TableRowSorter<DefaultTableModel> sorter =
+                new TableRowSorter<DefaultTableModel>(model);
         
         table = new JTable(model);
+        table.setRowSorter(sorter);
         //add the table to the frame
         panel.setLayout(new BorderLayout());
         panel.add(new JScrollPane(table));
         return table;
 	}
 
+	/**
+	 * @return the table
+	 */
+	public static JTable getTable() {
+		return table;
+	}
+
+	/**
+	 * @param table the table to set
+	 *//*
+	public static void setTable(JTable table) {
+		SendSMSBtnsHandler.table = table;
+	}*/
+
 	private void setModelRowData(DefaultTableModel model)
 	{
 		VDBSModel dtaModel = new VDBSModel();
-			Map<String,String> smsMap =  dtaModel.getSMSMapFor
-					(
-							sendSMS.getTextWard().getText().isEmpty()?null:sendSMS.getTextWard().getText(),
-							sendSMS.getTextSurName().getText().isEmpty()?null:sendSMS.getTextWard().getText(),
-							sendSMS.getComboSex().getSelectedIndex()==0?0:sendSMS.getComboSex().getSelectedIndex(),
-							sendSMS.getComboHeadStatus().getSelectedIndex()==0?0:sendSMS.getComboHeadStatus().getSelectedIndex()
-					);
-			
-				
-			int num=1;
-		for(Map.Entry<String, String> entry:smsMap.entrySet())
+		Collection<SMember> members =  dtaModel.getAllMembers();
+		
+		
+		for (SMember sMember : members)
 		{
 			model.addRow(new Object[]
-					{ num++,entry.getKey(),entry.getValue(),false}
+					{ 
+						sMember.getM_ward(),sMember.getM_sex(),sMember.getFamily_head_status(),sMember.getM_name_e(),sMember.getM_contact(),false}
 					);
 		}
-			
-		
-			
 		
 	}
 

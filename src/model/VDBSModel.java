@@ -3,6 +3,7 @@ package model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import util.UConstants;
 import beans.SFamily;
 import beans.SMember;
-import util.UConstants;
 
 public class VDBSModel 
 {
@@ -305,6 +306,75 @@ public class VDBSModel
 	   				e.printStackTrace();
 	   		    }
 	   	 return values;
+	}
+	public String[] getAllWardNumbers()
+	{
+		Collection<String> values = new ArrayList<String>();
+	   	 try 
+	   	 {
+	   		 doc.getDocumentElement().normalize();
+	   		 NodeList nList = doc.getElementsByTagName("Member");
+	   		 for (int temp = 0; temp < nList.getLength(); temp++)
+	   		 {
+	   			 Node nNode = nList.item(temp);
+	
+	   		        if (nNode.getNodeType() == Node.ELEMENT_NODE)
+	   				{
+	   		            Element eElement = (Element) nNode;
+	   		            if(!values.contains(eElement.getAttribute(UConstants.WARD_ATTR)))
+	   		            		values.add(eElement.getAttribute(UConstants.WARD_ATTR));
+	   		            //System.out.println("Staff id : " + eElement.getAttribute("id"));
+	   		        }
+	   		    }
+	   		    }
+	   			catch (Exception e)
+	   			{
+	   				e.printStackTrace();
+	   		    }
+	   	 return values.toArray(new String[values.size()]);
+	}
+	public Collection<SMember> getAllMembers()
+	{
+		Collection<SMember> values = new ArrayList<SMember>();
+	   	 try 
+	   	 {
+	   		 doc.getDocumentElement().normalize();
+	   		 NodeList nList = doc.getElementsByTagName("Member");
+	   		 for (int temp = 0; temp < nList.getLength(); temp++)
+	   		 {
+	   			 Node nNode = nList.item(temp);
+	
+	   		        if (nNode.getNodeType() == Node.ELEMENT_NODE)
+	   				{
+	   		            Element eElement = (Element) nNode;
+	   		            SMember member = initializeMember(eElement);
+	   		            values.add(member);
+	   		        }
+	   		    }
+	   		    }
+	   			catch (Exception e)
+	   			{
+	   				e.printStackTrace();
+	   		    }
+	   	 return values;
+	}
+	private SMember initializeMember(Element eElement)
+	{
+		SMember member = new SMember();
+      	member.setMember_id(eElement.getAttribute(UConstants.MEMBER_UID_ATTR));
+      	member.setFamily_head_status(eElement.getAttribute(UConstants.HEAD_STATUS_ATTR));
+      	member.setFamily_id(eElement.getAttribute(UConstants.FAMILY_UID_ATTR));
+      	member.setM_contact(eElement.getAttribute(UConstants.MOBILE_NO_ATTR));
+      	member.setM_dist(eElement.getAttribute(UConstants.DIST_ATTR));
+      	member.setM_dob(eElement.getAttribute(UConstants.DOB_ATTR));
+      	member.setM_gaon(eElement.getAttribute(UConstants.GAON_ATTR));
+      	member.setM_name_e(eElement.getAttribute(UConstants.ENG_NAME_ATTR));
+      	member.setM_name_m(eElement.getAttribute(UConstants.MARATHI_NAME_ATTR));
+      	member.setM_sex(eElement.getAttribute(UConstants.SEX_STATUS_ATTR));
+      	member.setM_state(eElement.getAttribute(UConstants.STATE_ATTR));
+      	member.setM_tal(eElement.getAttribute(UConstants.TAL_ATTR));
+      	member.setM_ward(Integer.parseInt(eElement.getAttribute(UConstants.WARD_ATTR)));
+		return member;
 	}
 
 }
